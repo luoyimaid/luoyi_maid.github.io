@@ -61,24 +61,99 @@
       <div id="middlecontent" title class="global-width sidebar-right">
         <section id="main">
   
-    <article id="post-react/react_component" class="article global-container article-type-post" itemscope itemprop="blogPost">
+    <article id="post-jsArray" class="article global-container article-type-post" itemscope itemprop="blogPost">
   
     <header class="article-header">
       
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2020/04/02/react/react_component/">react组件间抽象</a>
+      <a class="article-title" href="/2020/04/02/jsArray/">原生JS实现常见高阶数组方法</a>
     </h1>
   
 
     </header>
   
   <div class="article-meta">
-    <a href="/2020/04/02/react/react_component/" class="article-date">
-  <time datetime="2020-04-02T06:24:23.000Z" itemprop="datePublished">2020-04-02</time>
+    <a href="/2020/04/02/jsArray/" class="article-date">
+  <time datetime="2020-04-02T09:40:23.000Z" itemprop="datePublished">2020-04-02</time>
+  <span id="busuanzi_container_page_pv" style='display:none' class="article-date">
+    <i class="icon-smile icon"></i> 阅读数：<span id="busuanzi_value_page_pv"></span>次
+  </span>
 </a>
     
     
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%8E%9F%E7%94%9FJS/" rel="tag">原生JS</a></li></ul>
+
+  </div>
+  
+
+  <div class="article-inner">
+    
+    <div class="article-content article-content-cloud" itemprop="articleBody">
+      
+        <ul>
+<li>在实现之前，我们先来介绍一下高阶函数：可以接收另外一个函数作为参数或者返回值的函数</li>
+<li>那么高阶数组方法也是高阶函数</li>
+</ul>
+<h3 id="1-实现一个map方法"><a href="#1-实现一个map方法" class="headerlink" title="1. 实现一个map方法"></a>1. 实现一个map方法</h3><ul>
+<li>map：接收两个参数，一个是回调函数，一个是this（可选）, 并且对原数组没有影响</li>
+<li>可以先捋一下实现思路<ol>
+<li>首先肯定是将map方法挂在数组原型上，并且接收两个参数，如上所说</li>
+<li>先对this，callback做容错处理，严谨一点</li>
+<li>将参数强转为对象</li>
+<li>创建一个新的数组，不用改变原数组</li>
+<li>for…in…循环遍历</li>
+</ol>
+</li>
+</ul>
+<div class="highlight-box"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">Array.prototype.map &#x3D; function(callbackFn, thisArg) &#123;</span><br><span class="line">    &#x2F;&#x2F; 处理this异常</span><br><span class="line">    if(this &#x3D;&#x3D;&#x3D; null || this &#x3D;&#x3D;&#x3D; undefined) &#123;</span><br><span class="line">        throw new TypeError(&quot;Cannot read property &#39;map&#39; of null or undefined&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">    if(Object.prototype.toString.call(callbackFn) !&#x3D;&#x3D; &#39;[object Function]&#39;) &#123;</span><br><span class="line">        throw new TypeError(&quot;callbackFn is not a function&quot;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    let o &#x3D; Object(this);</span><br><span class="line">    let t &#x3D; thisArg;</span><br><span class="line"></span><br><span class="line">    let length &#x3D; o.length &gt;&gt;&gt; 0;</span><br><span class="line">    let array &#x3D; new Array(length);</span><br><span class="line"></span><br><span class="line">    for(let k &#x3D; 0; k &lt; length; k++) &#123;</span><br><span class="line">        if(k in o) &#123;</span><br><span class="line">            let value &#x3D; o[k];</span><br><span class="line">            &#x2F;&#x2F; 依次传入this, 当前项，索引，整个数组</span><br><span class="line">            let mappedValue &#x3D; callbackFn.call(t, value, k, o);</span><br><span class="line">            array[k] &#x3D; mappedValue;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    return array;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">let arrayq &#x3D; [1, 2, 3, 4, 5];</span><br><span class="line">let newArray &#x3D; arrayq.map((item, index) &#x3D;&gt; &#123;</span><br><span class="line">    console.log(item, index);</span><br><span class="line">    return item * index;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">console.log(newArray);</span><br><span class="line">&#x2F;&#x2F; 1 0</span><br><span class="line">&#x2F;&#x2F; 2 1</span><br><span class="line">&#x2F;&#x2F; 3 2</span><br><span class="line">&#x2F;&#x2F; 4 3</span><br><span class="line">&#x2F;&#x2F; 5 4</span><br><span class="line">&#x2F;&#x2F; [0, 2, 6, 12, 20]</span><br></pre></td></tr></table></figure></div>
+
+<h3 id="2-实现一个reduce方法"><a href="#2-实现一个reduce方法" class="headerlink" title="2. 实现一个reduce方法"></a>2. 实现一个reduce方法</h3><ul>
+<li>reduce：接收两个参数，一个是回调函数，一个是初始值（可选）, 并且对原数组没有影响</li>
+<li>可以先捋一下实现思路<ol>
+<li>首先肯定是将map方法挂在数组原型上，并且接收两个参数，如上所说</li>
+<li>先对this，callback做容错处理，严谨一点</li>
+<li>将参数强转为对象</li>
+<li>初始化兼容，如果没有传初始值，默认选数组第一项作为初始值</li>
+<li>for…in…循环遍历数组，实现累加<div class="highlight-box"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">Array.prototype.reduce &#x3D; function(callbackFn, currentValue) &#123;</span><br><span class="line">    &#x2F;&#x2F; 处理this异常</span><br><span class="line">    if(this &#x3D;&#x3D;&#x3D; null || this &#x3D;&#x3D;&#x3D; undefined) &#123;</span><br><span class="line">        throw new TypeError(&quot;Cannot read property &#39;map&#39; of null or undefined&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">    &#x2F;&#x2F; 处理回调异常</span><br><span class="line">    if(Object.prototype.toString.call(callbackFn) !&#x3D;&#x3D; &#39;[object Function]&#39;) &#123;</span><br><span class="line">        throw new TypeError(&quot;&#96;$&#123;callbackFn&#125;&#96; is not a function&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">    let o &#x3D; Object(this);</span><br><span class="line">    let accumulator &#x3D; currentValue;</span><br><span class="line">    let k &#x3D; 0;</span><br><span class="line">    if(accumulator &#x3D;&#x3D;&#x3D; undefined) &#123;</span><br><span class="line">        for(; k &lt; o.length; k++) &#123;</span><br><span class="line">            &#x2F;&#x2F; 查找原型链</span><br><span class="line">            if(k in o) &#123;</span><br><span class="line">                accumulator &#x3D; o[k];</span><br><span class="line">                k++;</span><br><span class="line">                break;</span><br><span class="line">            &#125;</span><br><span class="line">            &#x2F;&#x2F; 数组循环完还没有出逻辑，说明数组是空数组</span><br><span class="line">            throw new Error(&#39;empty array&#39;);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    for(; k &lt; o.length; k++) &#123;</span><br><span class="line">        if(k in o) &#123;</span><br><span class="line">            accumulator &#x3D; callbackFn.call(undefined, accumulator, o[k], k, o);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    return accumulator;</span><br><span class="line">&#125;</span><br><span class="line">let array &#x3D; [1, 2, 3, 4, 5];</span><br><span class="line">let reduceArray &#x3D; array.reduce((preNum, curNum) &#x3D;&gt; &#123;</span><br><span class="line">    return preNum + curNum;</span><br><span class="line">&#125;);</span><br><span class="line">console.log(reduceArray);</span><br><span class="line">&#x2F;&#x2F; 15</span><br></pre></td></tr></table></figure></div>
+
+</li>
+</ol>
+</li>
+</ul>
+
+      
+    </div>
+    
+  </div>
+  
+  
+</article>
+
+  
+    <article id="post-react_component" class="article global-container article-type-post" itemscope itemprop="blogPost">
+  
+    <header class="article-header">
+      
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/04/02/react_component/">react组件间抽象</a>
+    </h1>
+  
+
+    </header>
+  
+  <div class="article-meta">
+    <a href="/2020/04/02/react_component/" class="article-date">
+  <time datetime="2020-04-02T06:24:23.000Z" itemprop="datePublished">2020-04-02</time>
+  <span id="busuanzi_container_page_pv" style='display:none' class="article-date">
+    <i class="icon-smile icon"></i> 阅读数：<span id="busuanzi_value_page_pv"></span>次
+  </span>
+</a>
+    
+    
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/react%E7%9B%B8%E5%85%B3/" rel="tag">react相关</a></li></ul>
+
   </div>
   
 
@@ -136,24 +211,29 @@
 </article>
 
   
-    <article id="post-reactFile" class="article global-container article-type-post" itemscope itemprop="blogPost">
+    <article id="post-react_cssModule" class="article global-container article-type-post" itemscope itemprop="blogPost">
   
     <header class="article-header">
       
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2020/04/01/reactFile/">react样式处理&amp;CSS module</a>
+      <a class="article-title" href="/2020/04/01/react_cssModule/">react样式处理&amp;CSS module</a>
     </h1>
   
 
     </header>
   
   <div class="article-meta">
-    <a href="/2020/04/01/reactFile/" class="article-date">
+    <a href="/2020/04/01/react_cssModule/" class="article-date">
   <time datetime="2020-04-01T13:24:23.000Z" itemprop="datePublished">2020-04-01</time>
+  <span id="busuanzi_container_page_pv" style='display:none' class="article-date">
+    <i class="icon-smile icon"></i> 阅读数：<span id="busuanzi_value_page_pv"></span>次
+  </span>
 </a>
     
     
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/react%E7%9B%B8%E5%85%B3/" rel="tag">react相关</a></li></ul>
+
   </div>
   
 
@@ -270,6 +350,9 @@
   <div class="article-meta">
     <a href="/2020/04/01/hello-world/" class="article-date">
   <time datetime="2020-04-01T13:12:51.214Z" itemprop="datePublished">2020-04-01</time>
+  <span id="busuanzi_container_page_pv" style='display:none' class="article-date">
+    <i class="icon-smile icon"></i> 阅读数：<span id="busuanzi_value_page_pv"></span>次
+  </span>
 </a>
     
     
@@ -332,9 +415,23 @@
 
   
     
+  <div class="widget-box">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/react%E7%9B%B8%E5%85%B3/" rel="tag">react相关</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8E%9F%E7%94%9FJS/" rel="tag">原生JS</a></li></ul>
+    </div>
+  </div>
+
 
   
     
+  <div class="widget-box">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/react%E7%9B%B8%E5%85%B3/" style="font-size: 20px;">react相关</a> <a href="/tags/%E5%8E%9F%E7%94%9FJS/" style="font-size: 10px;">原生JS</a>
+    </div>
+  </div>
+
   
     
   <div class="widget-box">
@@ -352,11 +449,15 @@
       <ul>
         
           <li>
-            <a href="/2020/04/02/react/react_component/">react组件间抽象</a>
+            <a href="/2020/04/02/jsArray/">原生JS实现常见高阶数组方法</a>
           </li>
         
           <li>
-            <a href="/2020/04/01/reactFile/">react样式处理&amp;CSS module</a>
+            <a href="/2020/04/02/react_component/">react组件间抽象</a>
+          </li>
+        
+          <li>
+            <a href="/2020/04/01/react_cssModule/">react样式处理&amp;CSS module</a>
           </li>
         
           <li>
@@ -388,7 +489,7 @@
     &nbsp;|&nbsp;主题 <a href="https://github.com/yiluyanxia/hexo-theme-antiquity" target="_blank" rel="noopener">antiquity</a>
     <br>
     <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-    <span id="busuanzi_container_site_pv">不蒜子告之   阁下是第<span id="busuanzi_value_site_pv"></span>个访客</span>
+    <span id="busuanzi_container_site_pv">少年告之   阁下是第<span id="busuanzi_value_site_pv"></span>个访客</span>
   </div>
 </footer>
       <script src="https://code.jquery.com/jquery-2.0.3.min.js"></script>
