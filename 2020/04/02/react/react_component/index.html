@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>react组件间抽象 | welcome to luoyi&#39;s secret garden</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  
+  
+  <meta name="description" content="1. mixin：抽象公共方法⭐ 为什么使用mixinmixin，是将一个模块混入另外一个模块&#x2F;类中。引入mixin，是为了创造一种类似多重继承的效果。⭐自己封装一个mixin方法对于广义的mixin方法，就是用赋值的方法将mixin对象里的方法都挂载到原对象中，来实现对对象的混入123456789101112131415161718192021const mixin &#x3D; (obj, m">
+<meta property="og:type" content="article">
+<meta property="og:title" content="react组件间抽象">
+<meta property="og:url" content="http://yoursite.com/2020/04/02/react/react_component/index.html">
+<meta property="og:site_name" content="welcome to luoyi&#39;s secret garden">
+<meta property="og:description" content="1. mixin：抽象公共方法⭐ 为什么使用mixinmixin，是将一个模块混入另外一个模块&#x2F;类中。引入mixin，是为了创造一种类似多重继承的效果。⭐自己封装一个mixin方法对于广义的mixin方法，就是用赋值的方法将mixin对象里的方法都挂载到原对象中，来实现对对象的混入123456789101112131415161718192021const mixin &#x3D; (obj, m">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-04-02T06:24:23.000Z">
+<meta property="article:modified_time" content="2020-04-02T06:55:15.399Z">
+<meta property="article:author" content="少年梦江南">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="welcome to luoyi&#39;s secret garden" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/images/default-avatar.jpg">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+<link rel="stylesheet" href="/css/highlight.css">
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body>
+  <div id="fullpage" class="mobile-nav-right">
+    
+      <div id="wrapper" title="图片来自网络">
+    
+    
+      <header id="header">
+  <div id="nav-toggle" class="nav-toggle"></div>
+  <div class="head-box global-width">
+    <nav class="nav-box nav-right">
+      
+        <a class="nav-item" href="/" title
+        
+        >首页</a>
+      
+        <a class="nav-item" href="/archives" title
+        
+        >归档</a>
+      
+    </nav>
+  </div>
+</header>
+      <div id="middlecontent" title class="global-width sidebar-right">
+        <section id="main"><article id="post-react/react_component" class="article global-container article-type-post" itemscope itemprop="blogPost">
+  
+    <header class="article-header">
+      
+  
+    <h1 class="article-title" itemprop="name">
+      react组件间抽象
+    </h1>
+  
+
+    </header>
+  
+  <div class="article-meta">
+    <a href="/2020/04/02/react/react_component/" class="article-date">
+  <time datetime="2020-04-02T06:24:23.000Z" itemprop="datePublished">2020-04-02</time>
+</a>
+    
+    
+  </div>
+  
+    <span id="busuanzi_container_page_pv">
+      本文总阅读量<span id="busuanzi_value_page_pv"></span>次
+    </span>
+  
+
+  <div class="article-inner">
+    
+    <div class="article-content article-content-cloud" itemprop="articleBody">
+      
+        <h4 id="1-mixin：抽象公共方法"><a href="#1-mixin：抽象公共方法" class="headerlink" title="1. mixin：抽象公共方法"></a>1. mixin：抽象公共方法</h4><h5 id="⭐-为什么使用mixin"><a href="#⭐-为什么使用mixin" class="headerlink" title="⭐ 为什么使用mixin"></a>⭐ 为什么使用mixin</h5><pre><code>mixin，是将一个模块混入另外一个模块/类中。引入mixin，是为了创造一种类似多重继承的效果。</code></pre><h5 id="⭐自己封装一个mixin方法"><a href="#⭐自己封装一个mixin方法" class="headerlink" title="⭐自己封装一个mixin方法"></a>⭐自己封装一个mixin方法</h5><pre><code>对于广义的mixin方法，就是用赋值的方法将mixin对象里的方法都挂载到原对象中，来实现对对象的混入</code></pre><div class="highlight-box"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">const mixin &#x3D; (obj, mixins) &#x3D;&gt; &#123;</span><br><span class="line">    const newObj &#x3D; obj;</span><br><span class="line">    newObj.prototype &#x3D; Object.creat(obj.prototype);</span><br><span class="line">    for(let prop in mixins) &#123;</span><br><span class="line">        if(mixins.hasOwnProperty(prop)) &#123;</span><br><span class="line">            newObj.prototype[prop] &#x3D; mixins[props];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    return newObj;</span><br><span class="line">&#125;</span><br><span class="line">const bigMixin &#x3D; &#123;</span><br><span class="line">    fly: () &#x3D;&gt; &#123;</span><br><span class="line">        console.log(&#39;I can fly&#39;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">const big &#x3D; () &#x3D;&gt; &#123;</span><br><span class="line">    console.log(&#39;new big&#39;);</span><br><span class="line">&#125;</span><br><span class="line">const FlyBig &#x3D; mixin(big, bigMixin);</span><br><span class="line">const flyBig &#x3D; new FlyBig();    &#x2F;&#x2F; new big</span><br><span class="line">flyBig.fly();   &#x2F;&#x2F; I can fly</span><br></pre></td></tr></table></figure></div>
+<pre><code>通俗来讲，上述代码的作用是把任意多个源对象自身的可枚举属性复制给目标对象，再返回给目标对象。上述过程就像是在复制对象</code></pre><h5 id="⭐-react中使用mixin"><a href="#⭐-react中使用mixin" class="headerlink" title="⭐ react中使用mixin"></a>⭐ react中使用mixin</h5><p>react在使用creatClass构建组件时提供了mixin属性。</p>
+<div class="highlight-box"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">react.creatClass &#x3D; &#123;</span><br><span class="line">    mixin: []</span><br><span class="line">    render() &#123;</span><br><span class="line">        return (</span><br><span class="line">            &lt;div&gt;foo&lt;&#x2F;div&gt;</span><br><span class="line">        )</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+<pre><code>在creatClass 对象参数中传入数组mixins，里面封装了我们需要的模块，mixins数组也可以增加多个mixin,并且其中的每一个mixin方法都有重合，对于普通方法和生命周期方法是有所区分的
+
+在不同的mixin里实现两个名字一样的普通方法，讲道理后一个是可以覆盖前一个方法的，但是在react中会报错，因为在react中是不允许存在重名普通方法的maxin</code></pre><ul>
+<li>creatClass实现的mixin为react组件实现了两件事<ol>
+<li>工具方法：mixin的基本功能</li>
+<li>生命周期继承：props与state合并，比如有很多mixin来定义componentdidmount这个生命周期钩子，那么react会非常智能的把它们合并起来执行<h5 id="⭐-mixin的问题"><a href="#⭐-mixin的问题" class="headerlink" title="⭐ mixin的问题"></a>⭐ mixin的问题</h5></li>
+</ol>
+</li>
+</ul>
+<ol>
+<li>破坏了原有组件的封装：mixin方法会混入新的方法，给原有的组件带来新的特性，会需要很多不可见的状态需要去维护</li>
+<li>命名冲突：mixin是平面结构，不能在两个mixin里面使用同一个方法</li>
+<li>增加复杂性：mixin也有自己的生命周期方法</li>
+</ol>
+<h4 id="2-高阶组件-–-取代mixin"><a href="#2-高阶组件-–-取代mixin" class="headerlink" title="2. 高阶组件 – 取代mixin"></a>2. 高阶组件 – 取代mixin</h4><p>高阶组件有两种实现方式：</p>
+<pre><code>1. 属性代理：高阶组件通过被包裹的react组件来操作props
+2. 反向继承：高阶组件继承于被包裹的react组件</code></pre><h5 id="1-属性代理"><a href="#1-属性代理" class="headerlink" title="1. 属性代理"></a>1. 属性代理</h5><div class="highlight-box"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">const myContainer &#x3D; (wrappedComponent) &#x3D;&gt; &#123;</span><br><span class="line">    class extends Component &#123;</span><br><span class="line">        render() &#123;</span><br><span class="line">            return &lt;wrappedComponent &#123;...this.props&#125; &#x2F;&gt;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">&#x2F;&#x2F;</span><br><span class="line">class myComponent extends Component &#123;</span><br><span class="line">    &#x2F;&#x2F;&#x2F;</span><br><span class="line">&#125;</span><br><span class="line">export default myContainer(myComponent);</span><br></pre></td></tr></table></figure></div>
+<pre><code>当使用组件代理实现高阶组件时，执行生命周期的过程类似于堆栈调用
+高阶组件可以做到对组件的控制，包括props，通过refs使用引用，抽象state等</code></pre><ul>
+<li><p>控制props</p>
+<p>  我们应该尽可能的对高阶组件的props重命名以免混淆。对于原组件来说，只要套用这个高阶组件，我们的新组件中就会多一个text的prop</p>
+<div class="highlight-box"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">const myContainer &#x3D; (wrappedComponent) &#x3D;&gt; &#123;</span><br><span class="line">    class extends Component &#123;</span><br><span class="line">        render() &#123;</span><br><span class="line">            const newProps &#x3D; &#123;</span><br><span class="line">                text: newText</span><br><span class="line">            &#125;</span><br><span class="line">            return &lt;wrappedComponent &#123;...this.props&#125; &#123;...this.newProps&#125; &#x2F;&gt;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div></li>
+<li><p>通过refs使用引用</p>
+<p>  当wrappedComponent被渲染时，refs回调就会被执行，这样的话就会拿到wrappedComponent实例的引用，也会更方便的调用实例的方法</p>
+<div class="highlight-box"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">const myContainer &#x3D; (wrappedComponent) &#x3D;&gt; &#123;</span><br><span class="line">    class extends Component &#123;</span><br><span class="line">        proc(wrappedComponentTnstance) &#123;</span><br><span class="line">            wrappedComponentTnstance.method()</span><br><span class="line">        &#125;</span><br><span class="line">        render() &#123;</span><br><span class="line">            const props &#x3D; Object.assign(&#123;&#125;, this.props, &#123;</span><br><span class="line">                this.refs.bind(this)</span><br><span class="line">            &#125;);</span><br><span class="line">            return &lt;wrappedComponent &#123;...this.props&#125; &#x2F;&gt;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div></li>
+<li><p>抽象state</p>
+<p>  通过wrappedComponent提供的props和回调抽象state，将原组件抽象成展示组件，分离内部状态</p>
+<div class="highlight-box"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">const myContainer &#x3D; (wrappedComponent) &#x3D;&gt; &#123;</span><br><span class="line">    class extends Component &#123;</span><br><span class="line">        constructor(props) &#123;</span><br><span class="line">            super(props);</span><br><span class="line">            this.state &#x3D; &#123;</span><br><span class="line">                name: &#39;&#39;</span><br><span class="line">            &#125;</span><br><span class="line">            this.onNameChange &#x3D; this.onNameChange.bind(this);</span><br><span class="line">        &#125;</span><br><span class="line">        onNameChange(event) &#123;</span><br><span class="line">            this.setState(&#123;</span><br><span class="line">                name: event.target.value</span><br><span class="line">            &#125;);</span><br><span class="line">        &#125;</span><br><span class="line">        render() &#123;</span><br><span class="line">            const newProps &#x3D; &#123;</span><br><span class="line">                name: &#123;</span><br><span class="line">                    value: this.state.name,</span><br><span class="line">                    onChange: this.onNameChange</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            return &lt;wrappedComponent &#123;...this.props&#125; &#123;...this.newProps&#125; &#x2F;&gt;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div></li>
+<li><p>高阶组件与mixin的区别</p>
+<p>  高阶组件符合函数式编程思想，对于原组件来说，并不会感知到高阶组件的存在</p>
+<h5 id="2-反向继承"><a href="#2-反向继承" class="headerlink" title="2. 反向继承"></a>2. 反向继承</h5></li>
+</ul>
+<h4 id="3-组合式组件开发实践"><a href="#3-组合式组件开发实践" class="headerlink" title="3. 组合式组件开发实践"></a>3. 组合式组件开发实践</h4><ol>
+<li>组件再分离</li>
+<li>逻辑再抽象</li>
+</ol>
+<p>我们平时开发中就遵循这种逻辑，将组件拆分成最细化的原子组件，通过拆分组合的方式实现一个个功能组件，然后再基于高阶组件完成组件逻辑上的抽象</p>
+
+      
+    </div>
+    
+      <footer class="article-footer">
+        完
+      </footer>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  <div class="article-nav-block">
+    
+  </div>
+  <div class="article-nav-block">
+    
+      <a href="/2020/04/01/reactFile/" id="article-nav-older" class="article-nav-link-wrap">
+        <div class="article-nav-title">react样式处理&amp;CSS module</div>
+        <strong class="article-nav-caption"></strong>
+      </a>
+    
+  </div>
+</nav>
+
+    <link rel="stylesheet" href="/css/gitment.css"> 
+<script src="/js/gitment.js"></script>
+
+<div id="gitmentContainer"></div>
+
+<script>
+var gitment = new Gitment({
+  owner: '',
+  repo: '',
+  oauth: {
+    client_id: '',
+    client_secret: '',
+  },
+})
+gitment.render('gitmentContainer')
+</script>
+
+  
+  
+</article>
+</section>
+        <aside id="sidebar">
+  
+    <div class="widget-box">
+  <div class="avatar-box">
+    <img class="avatar" src="/images/default-avatar.jpg" title="图片来自网络"></img>
+    <h3 class="avatar-name">
+      
+        少年梦江南
+      
+    </h3>
+    <p class="avatar-slogan">
+      前端菜鸟攻城狮，请多多指教
+    </p>
+  </div>
+</div>
+
+
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-box">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-box">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2020/04/02/react/react_component/">react组件间抽象</a>
+          </li>
+        
+          <li>
+            <a href="/2020/04/01/reactFile/">react样式处理&amp;CSS module</a>
+          </li>
+        
+          <li>
+            <a href="/2020/04/01/hello-world/">使用hexo+github创建博客</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+      <div class="widget-box">
+    <h3 class="widget-title">友链</h3>
+    <div class="widget">
+      
+        <a style="display: block;" href="https://luoyimaid.github.io/" title target='_blank'
+        >少年梦江南</a>
+      
+    </div>
+  </div>
+
+  
+</aside>
+      </div>
+      <footer id="footer">
+  <div class="foot-box global-width">
+    &copy; 2020 少年梦江南 &nbsp;&nbsp;
+    Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    &nbsp;|&nbsp;主题 <a href="https://github.com/yiluyanxia/hexo-theme-antiquity" target="_blank" rel="noopener">antiquity</a>
+    <br>
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span id="busuanzi_container_site_pv">不蒜子告之   阁下是第<span id="busuanzi_value_site_pv"></span>个访客</span>
+  </div>
+</footer>
+      <script src="https://code.jquery.com/jquery-2.0.3.min.js"></script>
+<script>
+if (!window.jQuery) {
+var script = document.createElement('script');
+script.src = "/js/jquery-2.0.3.min.js";
+document.body.write(script);
+}
+</script>
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+    </div>
+    <nav id="mobile-nav" class="mobile-nav-box">
+  <div class="mobile-nav-img mobile-nav-top"></div>
+  
+    <a href="/" class="mobile-nav-link">首页</a>
+  
+    <a href="/archives" class="mobile-nav-link">归档</a>
+  
+  <div class="mobile-nav-img  mobile-nav-bottom"></div>
+</nav>    
+  </div>
+</body>
+</html>

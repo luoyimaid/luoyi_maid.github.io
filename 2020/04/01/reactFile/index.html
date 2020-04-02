@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>react样式处理&amp;CSS module | welcome to luoyi&#39;s secret garden</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  
+  
+  <meta name="description" content="本节样式处理的重点在CSS module  1. css基本样式设置 1. 行内样式设置1. 自定义组件建议支持className，尽量不使用行内样式 2. 设置行内样式时需要使用对象 123456789const style &#x3D; &amp;#123;    color: white,    backgroundImage: &#96;$&amp;#123;url(imgUrl)&amp;#125;&#96;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="react样式处理&amp;CSS module">
+<meta property="og:url" content="http://yoursite.com/2020/04/01/reactFile/index.html">
+<meta property="og:site_name" content="welcome to luoyi&#39;s secret garden">
+<meta property="og:description" content="本节样式处理的重点在CSS module  1. css基本样式设置 1. 行内样式设置1. 自定义组件建议支持className，尽量不使用行内样式 2. 设置行内样式时需要使用对象 123456789const style &#x3D; &amp;#123;    color: white,    backgroundImage: &#96;$&amp;#123;url(imgUrl)&amp;#125;&#96;">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-04-01T13:24:23.000Z">
+<meta property="article:modified_time" content="2020-04-02T06:55:50.314Z">
+<meta property="article:author" content="少年梦江南">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="welcome to luoyi&#39;s secret garden" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/images/default-avatar.jpg">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+<link rel="stylesheet" href="/css/highlight.css">
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body>
+  <div id="fullpage" class="mobile-nav-right">
+    
+      <div id="wrapper" title="图片来自网络">
+    
+    
+      <header id="header">
+  <div id="nav-toggle" class="nav-toggle"></div>
+  <div class="head-box global-width">
+    <nav class="nav-box nav-right">
+      
+        <a class="nav-item" href="/" title
+        
+        >首页</a>
+      
+        <a class="nav-item" href="/archives" title
+        
+        >归档</a>
+      
+    </nav>
+  </div>
+</header>
+      <div id="middlecontent" title class="global-width sidebar-right">
+        <section id="main"><article id="post-reactFile" class="article global-container article-type-post" itemscope itemprop="blogPost">
+  
+    <header class="article-header">
+      
+  
+    <h1 class="article-title" itemprop="name">
+      react样式处理&amp;CSS module
+    </h1>
+  
+
+    </header>
+  
+  <div class="article-meta">
+    <a href="/2020/04/01/reactFile/" class="article-date">
+  <time datetime="2020-04-01T13:24:23.000Z" itemprop="datePublished">2020-04-01</time>
+</a>
+    
+    
+  </div>
+  
+    <span id="busuanzi_container_page_pv">
+      本文总阅读量<span id="busuanzi_value_page_pv"></span>次
+    </span>
+  
+
+  <div class="article-inner">
+    
+    <div class="article-content article-content-cloud" itemprop="articleBody">
+      
+        <ul>
+<li>本节样式处理的重点在CSS module</li>
+</ul>
+<h4 id="1-css基本样式设置"><a href="#1-css基本样式设置" class="headerlink" title="1. css基本样式设置"></a>1. css基本样式设置</h4><blockquote>
+<h5 id="1-行内样式设置"><a href="#1-行内样式设置" class="headerlink" title="1. 行内样式设置"></a>1. 行内样式设置</h5><pre><code>1. 自定义组件建议支持className，尽量不使用行内样式
+2. 设置行内样式时需要使用对象</code></pre></blockquote>
+<div class="highlight-box"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">const style &#x3D; &#123;</span><br><span class="line">    color: white,</span><br><span class="line">    backgroundImage: &#96;$&#123;url(imgUrl)&#125;&#96;,</span><br><span class="line">    &#x2F;&#x2F; 这里的大写会转换成-webkit-transition</span><br><span class="line">    WebkitTransition: &#39;all&#39;,</span><br><span class="line">    &#x2F;&#x2F; ms是唯一小写的浏览器前缀</span><br><span class="line">    msTransition: &#39;all&#39;</span><br><span class="line">&#125;</span><br><span class="line">const component &#x3D; &lt;component style&#x3D;&#123;style&#125; &#x2F;&gt;</span><br></pre></td></tr></table></figure></div>
+<blockquote>
+<h5 id="2-样式中的像素值"><a href="#2-样式中的像素值" class="headerlink" title="2. 样式中的像素值"></a>2. 样式中的像素值</h5><pre><code>1. react会自动为与大小有关的样式属性添加px，所以在写行内样式时可以不带单位</code></pre><h5 id="3-使用classnames库"><a href="#3-使用classnames库" class="headerlink" title="3. 使用classnames库"></a>3. 使用classnames库</h5></blockquote>
+<div class="highlight-box"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; classnames类库使得类名操作变得简单</span><br><span class="line">import React, &#123;Component&#125; from &#39;react&#39;;</span><br><span class="line">import classNames from &#39;classnames&#39;;</span><br><span class="line">&#x2F;&#x2F;</span><br><span class="line">class button extends component &#123;</span><br><span class="line">    render &#123;</span><br><span class="line">        const btnClass &#x3D; &#123;</span><br><span class="line">            &#39;btn&#39;: true,</span><br><span class="line">            &#39;btn_pressed&#39;: this.state.isPressed,</span><br><span class="line">            &#39;btn_over&#39;: !this.state.isPressed &amp;&amp; this.state.isHover</span><br><span class="line">        &#125;</span><br><span class="line">        return &lt;button className&#x3D;&#123;btnClass&#125;&gt;&#123;this.state.label&#125;&lt;&#x2F;button&gt;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<h4 id="2-CSS-module"><a href="#2-CSS-module" class="headerlink" title="2. CSS module"></a>2. CSS module</h4><hr>
+<h5 id="1-CSS模块化目前的两种主流解决方案"><a href="#1-CSS模块化目前的两种主流解决方案" class="headerlink" title="1. CSS模块化目前的两种主流解决方案"></a>1. CSS模块化目前的两种主流解决方案</h5><p>✨ <code>inline style</code></p>
+<pre><code>优点：彻底抛弃CSS，使用JS或者json来写样式，给CSS提供同JS同样强大的模块化功能
+
+缺点：几乎不能利用CSS的本身特性，对于伪元素，媒体查询等CSS特性的处理变得复杂，并且需要依赖框架实现</code></pre><p>✨   <code>CSS Module</code></p>
+<pre><code>依旧使用CSS，但是使用JS来管理样式依赖，最大程度的结合现有CSS生态&amp;JS模块化能力。
+
+发布时依旧编译出单独的JS&amp;CSS文件。
+
+目前，webpack css-loader已经内置了SS Module`功能</code></pre><h5 id="2-CSS模块化遇到的问题"><a href="#2-CSS模块化遇到的问题" class="headerlink" title="2. CSS模块化遇到的问题"></a>2. CSS模块化遇到的问题</h5><blockquote>
+<p>CSS 模块化最重要的是CSS样式的导入和导出，灵活导入以便复用，导出时要能够隐藏内部作用域，以免全局污染</p>
+</blockquote>
+<pre><code>1. 全局污染：方便重写样式，但所有的样式都全局生效。
+2. 命名混乱：多人开发容易导致命名混乱
+3. 依赖管理不彻底：除了引入JS，还要引入它的CSS，并且less/sass不能对每个组件都编译出单独的CSS，引入所有模块的CSS又比较浪费
+4. 无法共享变量：预编译语言无法提供跨JS&amp;CSS共享变量的能力
+5. 代码压缩不彻底：比如多人开发情况下的超长类名...</code></pre><h5 id="3-CSS-Modules模块化方案"><a href="#3-CSS-Modules模块化方案" class="headerlink" title="3. CSS Modules模块化方案"></a>3. <code>CSS Modules</code>模块化方案</h5><ul>
+<li>CSS Module内部通过ICSS来解决样式的导入&amp;导出问题，分别对应:import  &amp;  :export两个伪类<div class="highlight-box"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">:import(&#39;path&#x2F;style.css&#39;) &#123;</span><br><span class="line">    &#x2F;&#x2F;</span><br><span class="line">&#125;</span><br><span class="line">:export &#123;</span><br><span class="line">    &#x2F;&#x2F;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div></li>
+<li>但是CSS Modules通常用JS来管理CSS的能力，在JS文件中导入</li>
+</ul>
+<h4 id="3-CSS-module的使用-结合webpack-css-loader"><a href="#3-CSS-module的使用-结合webpack-css-loader" class="headerlink" title="3. CSS module的使用(结合webpack css-loader)"></a>3. CSS module的使用(结合webpack css-loader)</h4><hr>
+<h5 id="1-css-modules的启用"><a href="#1-css-modules的启用" class="headerlink" title="1. css modules的启用"></a>1. css modules的启用</h5><div class="highlight-box"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; webpack.config.js</span><br><span class="line">&#x2F;&#x2F; 在配置文件里加上modules即为启用，localIndentName是设置命名规则</span><br><span class="line">css?modules&amp;localIndentName&#x3D;[name]__[local]-[hash:base64:5]</span><br><span class="line">&#x2F;&#x2F;</span><br><span class="line">&#x2F;&#x2F; 接下来引入css&amp;转化class名</span><br><span class="line">&#x2F;* component&#x2F;button.css *&#x2F;</span><br><span class="line">.nomal&#123;&#125;</span><br><span class="line">.disabled&#123;&#125;</span><br><span class="line">&#x2F;* component.button.js *&#x2F;</span><br><span class="line">import styles from &#39;.&#x2F;button.css&#39;;</span><br><span class="line">console.log(styles);</span><br><span class="line">&#x2F;&#x2F; console出来的style是一个对象，并且是根据localIndentName命名规则自动生成的class名</span><br><span class="line">&#x2F;* object: &#123;</span><br><span class="line">    nomal: &#39;button--nomal-abc3536&#39;,</span><br><span class="line">    disabled: &#39;button--disabled-def5867&#39;</span><br><span class="line">&#125; *&#x2F;</span><br><span class="line">&#x2F;&#x2F;</span><br><span class="line">buttonElement.outerHTML &#x3D; &lt;button type&#x3D;&quot;submit&quot; class&#x3D;$&#123;styles.nomal&#125;&gt;submit&lt;&#x2F;button&gt;</span><br><span class="line">&#x2F;&#x2F;最终编译的HTML是这样的</span><br><span class="line">&lt;button type&#x3D;&quot;submit&quot; class&#x3D;&#39;button--nomal-abc3536&#39;&gt;submit&lt;&#x2F;button&gt;</span><br></pre></td></tr></table></figure></div>
+<ul>
+<li>css module通过上述处理，实现了以下几点：<ol>
+<li>样式都是局部化的,解决了命名冲突和全局污染问题</li>
+<li>class名生成规则配置灵活，可以借此压缩类名</li>
+<li>只需引入组件的JS，就可以搞定组件的JS&amp;CSS</li>
+</ol>
+</li>
+</ul>
+<h5 id="2-默认样式为局部样式"><a href="#2-默认样式为局部样式" class="headerlink" title="2. 默认样式为局部样式"></a>2. 默认样式为局部样式</h5><ul>
+<li>css module默认样式为局部样式，即默认给所有的样式名外加了:local，如果想切换到全局样式，用:global包裹<div class="highlight-box"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">:local(.nomal) &#123;</span><br><span class="line">    &#x2F;&#x2F;</span><br><span class="line">&#125;</span><br><span class="line">&#x2F;&#x2F;定义单个全局样式</span><br><span class="line">:global(.btn) &#123;</span><br><span class="line">    &#x2F;&#x2F;</span><br><span class="line">&#125;</span><br><span class="line">&#x2F;&#x2F; 定义多个全局样式</span><br><span class="line">:global &#123;</span><br><span class="line">    .link &#123;&#125;</span><br><span class="line">    .box&#123;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+</li>
+</ul>
+<h5 id="3-使用composes组合样式"><a href="#3-使用composes组合样式" class="headerlink" title="3. 使用composes组合样式"></a>3. 使用composes组合样式</h5><ul>
+<li><p>css module提供了一种方式用于样式复用：composes</p>
+<div class="highlight-box"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; 第一种使用方式：使用内部文件样式</span><br><span class="line">&#x2F;&#x2F;</span><br><span class="line">&#x2F;* components&#x2F;button.css *&#x2F;</span><br><span class="line">.base &#123;&#125;</span><br><span class="line">.nomal &#123;</span><br><span class="line">    composes: base</span><br><span class="line">    &#x2F;&#x2F;</span><br><span class="line">&#125;</span><br><span class="line">.disable &#123;</span><br><span class="line">    composes: base</span><br><span class="line">    &#x2F;&#x2F;</span><br><span class="line">&#125;</span><br><span class="line">&#x2F;&#x2F; js里</span><br><span class="line">import styles from &#39;.&#x2F;button.css&#39;;</span><br><span class="line">&#x2F;&#x2F;</span><br><span class="line">button.innerHTMl &#x3D; &lt;button type&#x3D;&#39;submit&#39; class&#x3D;$&#123;styles.nomal&#125;&gt;submit&lt;&#x2F;button&gt;</span><br><span class="line">&#x2F;&#x2F; 最终生成的HTML如下</span><br><span class="line">&lt;button type&#x3D;&#39;submit&#39; class&#x3D;&#39;button--base-abc53 button--nomal-abc53&#39;&gt;submit&lt;&#x2F;button&gt;</span><br><span class="line">&#x2F;&#x2F;</span><br><span class="line">&#x2F;&#x2F; 第二种使用方式：引用外部文件样式</span><br><span class="line">&#x2F;&#x2F;</span><br><span class="line">&#x2F;* setting.css *&#x2F;</span><br><span class="line">.primary-color &#123;&#125;</span><br><span class="line">&#x2F;* components&#x2F;button.css *&#x2F;</span><br><span class="line">.base &#123;&#125;</span><br><span class="line">.primary &#123;</span><br><span class="line">    composes: base;</span><br><span class="line">    composes: $primary-color from &#39;setting.css&#39;;</span><br><span class="line">    &#x2F;&#x2F;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+<p>  使用问题：由于composes不是标准的CSS语法，编译时会报错，所以只能使用预处理器自己的语法来处理样式复用</p>
+<h5 id="4-实现CSS与JS变量共享"><a href="#4-实现CSS与JS变量共享" class="headerlink" title="4. 实现CSS与JS变量共享"></a>4. 实现CSS与JS变量共享</h5><div class="highlight-box"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;* config.scss *&#x2F;</span><br><span class="line">$primary-color: #fff;</span><br><span class="line">&#x2F;&#x2F;</span><br><span class="line">:export &#123;</span><br><span class="line">    ptimaryColor: $primary-color;</span><br><span class="line">&#125;</span><br><span class="line">&#x2F;&#x2F;</span><br><span class="line">&#x2F;* app.js *&#x2F;</span><br><span class="line">import style from &#39;.&#x2F;config.scss&#39;;</span><br><span class="line">&#x2F;&#x2F; 会输出#fff</span><br><span class="line">console.log(style.ptimaryColor);</span><br></pre></td></tr></table></figure></div>
+<h5 id="5-css-module使用技巧"><a href="#5-css-module使用技巧" class="headerlink" title="5. css module使用技巧"></a>5. css module使用技巧</h5></li>
+<li><p>CSS module是对现有的CSS做减法，其中可以参考的建议使用规则如下：</p>
+<ol>
+<li><p>不使用选择器，只使用class来定义样式</p>
+</li>
+<li><p>不层叠多个class，只使用一个class把所有样式定义好</p>
+</li>
+<li><p>所有的样式通过composes来实现复用</p>
+</li>
+<li><p>不嵌套</p>
+<blockquote>
+<p>注意：css module只会转换class名相关的样式</p>
+</blockquote>
+</li>
+</ol>
+</li>
+</ul>
+<h5 id="6-如何与全局样式实现共存"><a href="#6-如何与全局样式实现共存" class="headerlink" title="6. 如何与全局样式实现共存"></a>6. 如何与全局样式实现共存</h5><ul>
+<li>前端项目中总会引入一些base.css一类的全局css文件,使用webpack可以使全局样式与css module的局部样式和谐共存。具体配置如下<div class="highlight-box"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">module: &#123;</span><br><span class="line">    loaders: [&#123;</span><br><span class="line">        test: &#x2F;\.jsx?$&#x2F;,</span><br><span class="line">        loader: &#39;babel&#39;</span><br><span class="line">    &#125;,&#123;</span><br><span class="line">        test: &#x2F;\.scss$&#x2F;</span><br><span class="line">        exclude: path.resolve(__dirname, &#39;src&#x2F;views&#39;),</span><br><span class="line">        loader: &#39;style!css?modules&amp;localIndentName&#x3D;[name]__[local]!sass?sourceMap&#x3D;true&#39;</span><br><span class="line">    &#125;,&#123;</span><br><span class="line">        test: &#x2F;\.scss$&#x2F;</span><br><span class="line">        exclude: path.resolve(__dirname, &#39;src&#x2F;styles&#39;),</span><br><span class="line">        loader: &#39;style!css!sass?sourceMap&#x3D;true&#39;</span><br><span class="line">    &#125;]</span><br><span class="line">&#125;</span><br><span class="line">&#x2F;* src&#x2F;app.js *&#x2F;</span><br><span class="line">import &#39;.&#x2F;styles&#x2F;app&#x2F;scss&#39;; &#x2F;&#x2F; 全局样式</span><br><span class="line">import component from &#39;.&#x2F;views&#x2F;component&#39;;</span><br><span class="line">&#x2F;* src&#x2F;views&#x2F;component.js *&#x2F;</span><br><span class="line">import &#39;.&#x2F;component.scss&#39;;</span><br></pre></td></tr></table></figure></div>
+<h4 id="3-CSS-module结合react的实践"><a href="#3-CSS-module结合react的实践" class="headerlink" title="3. CSS module结合react的实践"></a>3. CSS module结合react的实践</h4></li>
+</ul>
+<hr>
+<ul>
+<li>react里面写样式我们已经熟知了，所以不再重复赘述，但是如果我们不想频繁的使用styles.xx的话，可以频繁的使用react-css-loader库，它可以通过高阶组件的形式避免重复输入styles.xx<div class="highlight-box"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">import react, &#123;Component&#125; from &#39;react&#39;;</span><br><span class="line">import classnames from &#39;classnames&#39;;</span><br><span class="line">import CSSModules from &#39;react-css-loader&#39;;</span><br><span class="line">import styles from &#39;.&#x2F;dialog.css&#39;;</span><br><span class="line">&#x2F;&#x2F;</span><br><span class="line">class dialog extent Component &#123;</span><br><span class="line">    render() &#123;</span><br><span class="line">        const cx &#x3D; classnames(&#123;</span><br><span class="line">            confirm: !this.state.disabled,</span><br><span class="line">            discomfirm: this.state.disabled</span><br><span class="line">        &#125;);</span><br><span class="line">        return (</span><br><span class="line">            &lt;div className&#x3D;&#39;root&#39;&gt;</span><br><span class="line">                &lt;a styleName&#x3D;&#123;cx&#125;&gt;&lt;&#x2F;a&gt;</span><br><span class="line">                ...</span><br><span class="line">            &lt;&#x2F;div&gt;</span><br><span class="line">        );</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">export default CSSModule(dialog, styles);</span><br></pre></td></tr></table></figure></div></li>
+<li>对比我们最初写的CSS module，它有自己的优点：<ol>
+<li>不用再关注是否使用驼峰命名</li>
+<li>不用每一次使用css module的时候都都关联style对象</li>
+<li>可以强迫使用单一的css module</li>
+<li>当stylename关联了一个undefined css module的时候，会得到一个警告</li>
+<li>可以解决通过:global去写全局样式的情况，使用react-css-module可以写成这种形式：<code>&lt;div className=&quot;global-css&quot;&gt;&lt;/div&gt;</code></li>
+</ol>
+</li>
+</ul>
+
+      
+    </div>
+    
+      <footer class="article-footer">
+        完
+      </footer>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  <div class="article-nav-block">
+    
+      <a href="/2020/04/02/react/react_component/" id="article-nav-newer" class="article-nav-link-wrap">
+        <strong class="article-nav-caption"></strong>
+        <div class="article-nav-title">
+          
+            react组件间抽象
+          
+        </div>
+      </a>
+    
+  </div>
+  <div class="article-nav-block">
+    
+      <a href="/2020/04/01/hello-world/" id="article-nav-older" class="article-nav-link-wrap">
+        <div class="article-nav-title">使用hexo+github创建博客</div>
+        <strong class="article-nav-caption"></strong>
+      </a>
+    
+  </div>
+</nav>
+
+    <link rel="stylesheet" href="/css/gitment.css"> 
+<script src="/js/gitment.js"></script>
+
+<div id="gitmentContainer"></div>
+
+<script>
+var gitment = new Gitment({
+  owner: '',
+  repo: '',
+  oauth: {
+    client_id: '',
+    client_secret: '',
+  },
+})
+gitment.render('gitmentContainer')
+</script>
+
+  
+  
+</article>
+</section>
+        <aside id="sidebar">
+  
+    <div class="widget-box">
+  <div class="avatar-box">
+    <img class="avatar" src="/images/default-avatar.jpg" title="图片来自网络"></img>
+    <h3 class="avatar-name">
+      
+        少年梦江南
+      
+    </h3>
+    <p class="avatar-slogan">
+      前端菜鸟攻城狮，请多多指教
+    </p>
+  </div>
+</div>
+
+
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-box">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-box">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2020/04/02/react/react_component/">react组件间抽象</a>
+          </li>
+        
+          <li>
+            <a href="/2020/04/01/reactFile/">react样式处理&amp;CSS module</a>
+          </li>
+        
+          <li>
+            <a href="/2020/04/01/hello-world/">使用hexo+github创建博客</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+      <div class="widget-box">
+    <h3 class="widget-title">友链</h3>
+    <div class="widget">
+      
+        <a style="display: block;" href="https://luoyimaid.github.io/" title target='_blank'
+        >少年梦江南</a>
+      
+    </div>
+  </div>
+
+  
+</aside>
+      </div>
+      <footer id="footer">
+  <div class="foot-box global-width">
+    &copy; 2020 少年梦江南 &nbsp;&nbsp;
+    Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    &nbsp;|&nbsp;主题 <a href="https://github.com/yiluyanxia/hexo-theme-antiquity" target="_blank" rel="noopener">antiquity</a>
+    <br>
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span id="busuanzi_container_site_pv">不蒜子告之   阁下是第<span id="busuanzi_value_site_pv"></span>个访客</span>
+  </div>
+</footer>
+      <script src="https://code.jquery.com/jquery-2.0.3.min.js"></script>
+<script>
+if (!window.jQuery) {
+var script = document.createElement('script');
+script.src = "/js/jquery-2.0.3.min.js";
+document.body.write(script);
+}
+</script>
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+    </div>
+    <nav id="mobile-nav" class="mobile-nav-box">
+  <div class="mobile-nav-img mobile-nav-top"></div>
+  
+    <a href="/" class="mobile-nav-link">首页</a>
+  
+    <a href="/archives" class="mobile-nav-link">归档</a>
+  
+  <div class="mobile-nav-img  mobile-nav-bottom"></div>
+</nav>    
+  </div>
+</body>
+</html>
