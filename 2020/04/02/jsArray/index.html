@@ -18,7 +18,7 @@
 <meta property="og:description" content="在实现之前，我们先来介绍一下高阶函数：可以接收另外一个函数作为参数或者返回值的函数 那么高阶数组方法也是高阶函数  1. 实现一个map方法 map：接收两个参数，一个是回调函数，一个是this（可选）, 并且对原数组没有影响 可以先捋一下实现思路 首先肯定是将map方法挂在数组原型上，并且接收两个参数，如上所说 先对this，callback做容错处理，严谨一点 将参数强转为对象 创建一个新的">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2020-04-02T09:40:23.000Z">
-<meta property="article:modified_time" content="2020-04-02T11:35:15.362Z">
+<meta property="article:modified_time" content="2020-04-03T08:26:41.577Z">
 <meta property="article:author" content="少年梦江南">
 <meta property="article:tag" content="原生JS">
 <meta name="twitter:card" content="summary">
@@ -123,6 +123,10 @@
 </ol>
 </li>
 </ul>
+<h3 id="3-实现一个filter方法"><a href="#3-实现一个filter方法" class="headerlink" title="3. 实现一个filter方法"></a>3. 实现一个filter方法</h3><ul>
+<li>filter: filter返回一个新的数组，数组里包含参数里所有被保留的项</li>
+<li>这个方法只接收一个参数，就是数组的当前项,回调函数返回一个布尔类型，来决定当前参数的去留<div class="highlight-box"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">Array.prototype.filter &#x3D; function(callbackFn, thisArg) &#123;</span><br><span class="line">    &#x2F;&#x2F; 处理this异常</span><br><span class="line">    if(this &#x3D;&#x3D;&#x3D; null || this &#x3D;&#x3D;&#x3D; undefined) &#123;</span><br><span class="line">        throw new TypeError(&quot;Cannot read property &#39;map&#39; of null or undefined&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">    &#x2F;&#x2F; 处理回调异常</span><br><span class="line">    if(Object.prototype.toString.call(callbackFn) !&#x3D;&#x3D; &#39;[object Function]&#39;) &#123;</span><br><span class="line">        throw new TypeError(&quot;&#96;$&#123;callbackFn&#125;&#96; is not a function&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">    let o &#x3D; Object(this);</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F; 新数组</span><br><span class="line">    let length &#x3D; 0;</span><br><span class="line">    let array &#x3D; [];</span><br><span class="line">    for(let i &#x3D; 0; i &lt; o.length; i++) &#123;</span><br><span class="line">        if(i in o) &#123;</span><br><span class="line">            if(callbackFn.call(thisArg, o[i], i, o)) &#123;</span><br><span class="line">                array[length++] &#x3D; o[i];</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    return array;</span><br><span class="line">&#125;</span><br><span class="line">let array &#x3D; [1, 2, 3, 4, 5];</span><br><span class="line">let filterArray &#x3D; array.filter(item &#x3D;&gt; item % 2);</span><br><span class="line">console.log(filterArray);</span><br><span class="line">&#x2F;&#x2F; [1, 3, 5]</span><br></pre></td></tr></table></figure></div></li>
+</ul>
 
       
     </div>
@@ -203,7 +207,7 @@ gitment.render('gitmentContainer')
   <div class="widget-box">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/react%E7%9B%B8%E5%85%B3/" rel="tag">react相关</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8E%9F%E7%94%9FJS/" rel="tag">原生JS</a></li></ul>
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/html-CSS/" rel="tag">html+CSS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/react%E7%9B%B8%E5%85%B3/" rel="tag">react相关</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8E%9F%E7%94%9FJS/" rel="tag">原生JS</a></li></ul>
     </div>
   </div>
 
@@ -213,7 +217,7 @@ gitment.render('gitmentContainer')
   <div class="widget-box">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/react%E7%9B%B8%E5%85%B3/" style="font-size: 20px;">react相关</a> <a href="/tags/%E5%8E%9F%E7%94%9FJS/" style="font-size: 10px;">原生JS</a>
+      <a href="/tags/html-CSS/" style="font-size: 15px;">html+CSS</a> <a href="/tags/react%E7%9B%B8%E5%85%B3/" style="font-size: 20px;">react相关</a> <a href="/tags/%E5%8E%9F%E7%94%9FJS/" style="font-size: 10px;">原生JS</a>
     </div>
   </div>
 
@@ -222,7 +226,7 @@ gitment.render('gitmentContainer')
   <div class="widget-box">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li></ul>
     </div>
   </div>
 

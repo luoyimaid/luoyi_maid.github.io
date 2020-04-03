@@ -178,6 +178,10 @@
 </ol>
 </li>
 </ul>
+<h3 id="3-实现一个filter方法"><a href="#3-实现一个filter方法" class="headerlink" title="3. 实现一个filter方法"></a>3. 实现一个filter方法</h3><ul>
+<li>filter: filter返回一个新的数组，数组里包含参数里所有被保留的项</li>
+<li>这个方法只接收一个参数，就是数组的当前项,回调函数返回一个布尔类型，来决定当前参数的去留<div class="highlight-box"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">Array.prototype.filter &#x3D; function(callbackFn, thisArg) &#123;</span><br><span class="line">    &#x2F;&#x2F; 处理this异常</span><br><span class="line">    if(this &#x3D;&#x3D;&#x3D; null || this &#x3D;&#x3D;&#x3D; undefined) &#123;</span><br><span class="line">        throw new TypeError(&quot;Cannot read property &#39;map&#39; of null or undefined&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">    &#x2F;&#x2F; 处理回调异常</span><br><span class="line">    if(Object.prototype.toString.call(callbackFn) !&#x3D;&#x3D; &#39;[object Function]&#39;) &#123;</span><br><span class="line">        throw new TypeError(&quot;&#96;$&#123;callbackFn&#125;&#96; is not a function&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">    let o &#x3D; Object(this);</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F; 新数组</span><br><span class="line">    let length &#x3D; 0;</span><br><span class="line">    let array &#x3D; [];</span><br><span class="line">    for(let i &#x3D; 0; i &lt; o.length; i++) &#123;</span><br><span class="line">        if(i in o) &#123;</span><br><span class="line">            if(callbackFn.call(thisArg, o[i], i, o)) &#123;</span><br><span class="line">                array[length++] &#x3D; o[i];</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    return array;</span><br><span class="line">&#125;</span><br><span class="line">let array &#x3D; [1, 2, 3, 4, 5];</span><br><span class="line">let filterArray &#x3D; array.filter(item &#x3D;&gt; item % 2);</span><br><span class="line">console.log(filterArray);</span><br><span class="line">&#x2F;&#x2F; [1, 3, 5]</span><br></pre></td></tr></table></figure></div></li>
+</ul>
 
       
     </div>
@@ -437,6 +441,181 @@
 </article>
 
   
+    <article id="post-CSS3动画效果" class="article global-container article-type-post" itemscope itemprop="blogPost">
+  
+    <header class="article-header">
+      
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/12/04/CSS3%E5%8A%A8%E7%94%BB%E6%95%88%E6%9E%9C/">CSS3动画效果</a>
+    </h1>
+  
+
+    </header>
+  
+  <div class="article-meta">
+    <a href="/2017/12/04/CSS3%E5%8A%A8%E7%94%BB%E6%95%88%E6%9E%9C/" class="article-date">
+  <time datetime="2017-12-03T16:32:23.000Z" itemprop="datePublished">2017-12-04</time>
+</a>
+    
+    
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/html-CSS/" rel="tag">html+CSS</a></li></ul>
+
+  </div>
+  
+
+  <div class="article-inner">
+    
+    <div class="article-content article-content-cloud" itemprop="articleBody">
+      
+        <h3 id="1-2D变换"><a href="#1-2D变换" class="headerlink" title="1. 2D变换"></a><strong>1. 2D变换</strong></h3><p><strong>Transform(变形)</strong><br><code>rotate()</code>旋转函数 取值度数    <code>transform: rotate(30deg);</code><br><code>skew()</code> 倾斜函数 取值度数   <code>transform: skew(30deg);</code><br><code>scale()</code>缩放函数 取值 正数、负数和小数<br><code>transform: scaleX(1.2) scaleY(1.2);</code><br><code>translate()</code>位移函数 像素值   <code>transform: translateX(100px);</code><br><code>transform-origin()</code> 改变旋转基点   <code>transform-origin: 100px 100px;</code></p>
+<h3 id="2-3D变换"><a href="#2-3D变换" class="headerlink" title="2. 3D变换"></a><strong>2. 3D变换</strong></h3><p><strong>1.transform-style（preserve-3d） 建立3D空间</strong><br><strong>2.perspective 景深</strong><br><strong>3.perspective- origin 景深基点</strong><br><strong>4.transform 新增函数</strong></p>
+<div class="highlight-box"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">rotateX()</span><br><span class="line">rotateY()</span><br><span class="line">rotateZ()</span><br><span class="line">translateZ()</span><br><span class="line">scaleZ()</span><br></pre></td></tr></table></figure></div>
+
+<h3 id="3-animation"><a href="#3-animation" class="headerlink" title="3. animation"></a><strong>3. animation</strong></h3><p><strong>关键帧——keyFrames ,类似于flash</strong><br><code>animation:运动名称,运动时间,运动形式,动画延时,播放次数,播放前是否重置</code><br>只需指明两个状态，之间的过程由计算机自动计算关键帧的时间单位<br>数字：0%、25%、100%等<br>字符：from(0%)、to(100%)<br>格式</p>
+<div class="highlight-box"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">@keyframes 动画名称</span><br><span class="line">&#123;</span><br><span class="line">	动画状态</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+<p>:代码展示如下</p>
+<div class="highlight-box"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">div&#123;</span><br><span class="line">    width:200px;</span><br><span class="line">    height:200px;</span><br><span class="line">    background-color: lightblue;</span><br><span class="line">    margin:150px auto;</span><br><span class="line">&#125;</span><br><span class="line">@keyframes domove &#123;</span><br><span class="line">    0%&#123;width:200px;&#125;</span><br><span class="line">    33%&#123;width:300px;&#125;</span><br><span class="line">    66%&#123;width:600px;&#125;</span><br><span class="line">    100%&#123;width:1000px;&#125;</span><br><span class="line">&#125;</span><br><span class="line">div:hover&#123;    </span><br><span class="line">        animation: domove 3s linear forwards;      </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<h4 id="用animate做一个进度条的效果"><a href="#用animate做一个进度条的效果" class="headerlink" title="用animate做一个进度条的效果"></a><strong>用animate做一个进度条的效果</strong></h4><ul>
+<li><h4 id="html部分"><a href="#html部分" class="headerlink" title="html部分"></a>html部分</h4><div class="highlight-box"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;div id&#x3D;&quot;div1&quot;&gt;</span><br><span class="line">    &lt;div&gt;&lt;&#x2F;div&gt;</span><br><span class="line">&lt;&#x2F;div&gt;</span><br></pre></td></tr></table></figure></div></li>
+<li><h4 id="css部分"><a href="#css部分" class="headerlink" title="css部分"></a>css部分</h4><div class="highlight-box"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">#div1&#123;</span><br><span class="line">        width: 1000px;</span><br><span class="line">        height:30px;</span><br><span class="line">        border: #cccccc solid 1px;</span><br><span class="line">        margin: 200px auto;</span><br><span class="line">        border-radius: 15px;</span><br><span class="line">    &#125;</span><br><span class="line">    #div1 div&#123;</span><br><span class="line">        width: 0;</span><br><span class="line">        height:30px;</span><br><span class="line">        background-color: slategray;</span><br><span class="line">        border-radius: 15px;</span><br><span class="line">        animation: domove 4s linear forwards;</span><br><span class="line">    &#125;</span><br><span class="line">    #div1:hover div&#123;</span><br><span class="line">        animation-play-state:paused;</span><br><span class="line">    &#125;</span><br><span class="line">    @keyframes domove &#123;</span><br><span class="line">        0%&#123;width:0;&#125;</span><br><span class="line">        50%&#123;width:800px;&#125;</span><br><span class="line">        100%&#123;width: 1000px;&#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></div></li>
+</ul>
+
+      
+    </div>
+    
+  </div>
+  
+  
+</article>
+
+  
+    <article id="post-web标准" class="article global-container article-type-post" itemscope itemprop="blogPost">
+  
+    <header class="article-header">
+      
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/12/02/web%E6%A0%87%E5%87%86/">详解web标准</a>
+    </h1>
+  
+
+    </header>
+  
+  <div class="article-meta">
+    <a href="/2017/12/02/web%E6%A0%87%E5%87%86/" class="article-date">
+  <time datetime="2017-12-02T06:48:04.000Z" itemprop="datePublished">2017-12-02</time>
+</a>
+    
+    
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/html-CSS/" rel="tag">html+CSS</a></li></ul>
+
+  </div>
+  
+
+  <div class="article-inner">
+    
+    <div class="article-content article-content-cloud" itemprop="articleBody">
+      
+        <ul>
+<li><h4 id="WEB标准是一系列标准的集合，网页主要由三部分组成：结构（Structure）、表现（Presentation）和行为（Behavior）。对应的标准也分三方面：结构化标准语言主要包括XHTML和XML，表现标准语言主要包括CSS，行为标准主要包括对象模型（如W3C-DOM）、ECMAScript等。"><a href="#WEB标准是一系列标准的集合，网页主要由三部分组成：结构（Structure）、表现（Presentation）和行为（Behavior）。对应的标准也分三方面：结构化标准语言主要包括XHTML和XML，表现标准语言主要包括CSS，行为标准主要包括对象模型（如W3C-DOM）、ECMAScript等。" class="headerlink" title="WEB标准是一系列标准的集合，网页主要由三部分组成：结构（Structure）、表现（Presentation）和行为（Behavior）。对应的标准也分三方面：结构化标准语言主要包括XHTML和XML，表现标准语言主要包括CSS，行为标准主要包括对象模型（如W3C DOM）、ECMAScript等。"></a>WEB标准是一系列标准的集合，网页主要由三部分组成：结构（Structure）、表现（Presentation）和行为（Behavior）。对应的标准也分三方面：结构化标准语言主要包括XHTML和XML，表现标准语言主要包括CSS，行为标准主要包括对象模型（如W3C DOM）、ECMAScript等。</h4><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly9nc3MzLmJkc3RhdGljLmNvbS83UG8zZFNhZ194STRraEdrcG9XSzFIRjZoaHkvYmFpa2UvYzA9YmFpa2U4MCw1LDUsODAsMjYvc2lnbj0yYzBhNTMwNWYyMWZiZTA5MDg1M2NiNDYwYTA5Njc1Ni9iZDNlYjEzNTMzZmE4MjhiZjFkZmYxOTBmZDFmNDEzNDk2MGE1YWMwLmpwZw?x-oss-process=image/format,png" alt="引用块内容"></li>
+</ul>
+<h3 id="1-结构标准"><a href="#1-结构标准" class="headerlink" title="1.结构标准"></a><strong>1.结构标准</strong></h3><ul>
+<li><p><strong>可扩展标记语言（XML）</strong></p>
+<h4 id="和HTML一样，XML同样来源于标准通用标记语言，可扩展标记语言和标准通用标记语言都是能定义其他语言的语言。XML最初设计的目的是弥补HTML的不足，以强大的扩展性满足网络信息发布的需要，后来逐渐用于网络数据的转换和描述。"><a href="#和HTML一样，XML同样来源于标准通用标记语言，可扩展标记语言和标准通用标记语言都是能定义其他语言的语言。XML最初设计的目的是弥补HTML的不足，以强大的扩展性满足网络信息发布的需要，后来逐渐用于网络数据的转换和描述。" class="headerlink" title="和HTML一样，XML同样来源于标准通用标记语言，可扩展标记语言和标准通用标记语言都是能定义其他语言的语言。XML最初设计的目的是弥补HTML的不足，以强大的扩展性满足网络信息发布的需要，后来逐渐用于网络数据的转换和描述。"></a>和<a href="https://baike.baidu.com/item/HTML" target="_blank" rel="noopener">HTML</a>一样，XML同样来源于标准通用标记语言，可扩展标记语言和标准通用标记语言都是能定义其他语言的语言。XML最初设计的目的是弥补HTML的不足，以强大的扩展性满足网络信息发布的需要，后来逐渐用于<a href="https://baike.baidu.com/item/%E7%BD%91%E7%BB%9C%E6%95%B0%E6%8D%AE" target="_blank" rel="noopener">网络数据</a>的转换和描述。</h4></li>
+<li><p><strong>可扩展超文本标记语言(<a href="https://baike.baidu.com/item/XHTML" target="_blank" rel="noopener">XTHML</a>)</strong></p>
+<h4 id="目前推荐遵循的是W3C于2000年1月26日推荐XML1-0。XML虽然数据转换能力强大，完全可以替代HTML，但面对成千上万已有的站点，直接采用XML还为时过早。因此，我们在HTML4-0的基础上，用XML的规则对其进行扩展，得到了XHTML。简单的说，建立XHTML的目的就是实现HTML向XML的过渡"><a href="#目前推荐遵循的是W3C于2000年1月26日推荐XML1-0。XML虽然数据转换能力强大，完全可以替代HTML，但面对成千上万已有的站点，直接采用XML还为时过早。因此，我们在HTML4-0的基础上，用XML的规则对其进行扩展，得到了XHTML。简单的说，建立XHTML的目的就是实现HTML向XML的过渡" class="headerlink" title="目前推荐遵循的是W3C于2000年1月26日推荐XML1.0。XML虽然数据转换能力强大，完全可以替代HTML，但面对成千上万已有的站点，直接采用XML还为时过早。因此，我们在HTML4.0的基础上，用XML的规则对其进行扩展，得到了XHTML。简单的说，建立XHTML的目的就是实现HTML向XML的过渡"></a>目前推荐遵循的是W3C于2000年1月26日推荐XML1.0。XML虽然数据转换能力强大，完全可以替代HTML，但面对成千上万已有的站点，直接采用XML还为时过早。因此，我们在HTML4.0的基础上，用XML的规则对其进行扩展，得到了XHTML。简单的说，建立XHTML的目的就是实现HTML向XML的过渡</h4></li>
+</ul>
+<h3 id="2-表现标准"><a href="#2-表现标准" class="headerlink" title="2.表现标准"></a><strong>2.表现标准</strong></h3><ul>
+<li><h4 id="层叠样式表（CSS）。目前推荐遵循的是万维网联盟（W3C）于1998年5月12日推荐CSS2。W3C创建CSS标准的目的是以CSS取代HTML表格式布局、帧和其他表现的语言。纯CSS布局与结构式XHTML相结合能帮助设计师分离外观与结构，使站点的访问及维护更加容易。"><a href="#层叠样式表（CSS）。目前推荐遵循的是万维网联盟（W3C）于1998年5月12日推荐CSS2。W3C创建CSS标准的目的是以CSS取代HTML表格式布局、帧和其他表现的语言。纯CSS布局与结构式XHTML相结合能帮助设计师分离外观与结构，使站点的访问及维护更加容易。" class="headerlink" title="层叠样式表（CSS）。目前推荐遵循的是万维网联盟（W3C）于1998年5月12日推荐CSS2。W3C创建CSS标准的目的是以CSS取代HTML表格式布局、帧和其他表现的语言。纯CSS布局与结构式XHTML相结合能帮助设计师分离外观与结构，使站点的访问及维护更加容易。"></a><a href="https://baike.baidu.com/item/CSS/5457?fromtitle=%E5%B1%82%E5%8F%A0%E6%A0%B7%E5%BC%8F%E8%A1%A8&fromid=524980" target="_blank" rel="noopener">层叠样式表</a>（CSS）。目前推荐遵循的是万维网联盟（W3C）于1998年5月12日推荐CSS2。W3C创建CSS标准的目的是以CSS取代HTML表格式布局、帧和其他表现的语言。纯CSS布局与结构式XHTML相结合能帮助设计师分离外观与结构，使站点的访问及维护更加容易。</h4></li>
+</ul>
+<h3 id="3-行为标准"><a href="#3-行为标准" class="headerlink" title="3.行为标准"></a><strong>3.行为标准</strong></h3><ul>
+<li><h4 id="ECMAScript"><a href="#ECMAScript" class="headerlink" title="ECMAScript"></a>ECMAScript</h4></li>
+</ul>
+<ul>
+<li><h4 id="ECMAScript-是-ECMA-制定的标准脚本语言-javaScript-目前遵循的是ECMAScript-262"><a href="#ECMAScript-是-ECMA-制定的标准脚本语言-javaScript-目前遵循的是ECMAScript-262" class="headerlink" title="ECMAScript 是 ECMA 制定的标准脚本语言(javaScript),目前遵循的是ECMAScript 262"></a>ECMAScript 是 ECMA 制定的标准<a href="https://baike.baidu.com/item/%E8%84%9A%E6%9C%AC%E8%AF%AD%E8%A8%80" target="_blank" rel="noopener">脚本语言</a>(javaScript),目前遵循的是ECMAScript 262</h4></li>
+</ul>
+<ul>
+<li><h4 id="文档对象模型"><a href="#文档对象模型" class="headerlink" title="文档对象模型"></a>文档对象模型</h4></li>
+</ul>
+<ul>
+<li><h4 id="文档对象模型（DOM）。根据W3C-DOM规范，DOM是一种与浏览器，平台，语言的接口，使得你可以访问页面其他的标准组件。简单理解，DOM解决了Netscaped的Javascript和Microsoft的Javascript之间的冲突，给予web设计师和开发者一个标准的方法，让他们来访问他们站点中的数据、脚本和表现层对象。"><a href="#文档对象模型（DOM）。根据W3C-DOM规范，DOM是一种与浏览器，平台，语言的接口，使得你可以访问页面其他的标准组件。简单理解，DOM解决了Netscaped的Javascript和Microsoft的Javascript之间的冲突，给予web设计师和开发者一个标准的方法，让他们来访问他们站点中的数据、脚本和表现层对象。" class="headerlink" title="文档对象模型（DOM）。根据W3C DOM规范，DOM是一种与浏览器，平台，语言的接口，使得你可以访问页面其他的标准组件。简单理解，DOM解决了Netscaped的Javascript和Microsoft的Javascript之间的冲突，给予web设计师和开发者一个标准的方法，让他们来访问他们站点中的数据、脚本和表现层对象。"></a><a href="https://baike.baidu.com/item/%E6%96%87%E6%A1%A3%E5%AF%B9%E8%B1%A1%E6%A8%A1%E5%9E%8B" target="_blank" rel="noopener">文档对象模型</a>（DOM）。根据<a href="http://www.w3.org/DOM/" target="_blank" rel="noopener">W3C DOM规范</a>，DOM是一种与浏览器，平台，语言的接口，使得你可以访问页面其他的标准组件。简单理解，DOM解决了Netscaped的Javascript和Microsoft的Javascript之间的冲突，给予web设计师和开发者一个标准的方法，让他们来访问他们站点中的数据、脚本和表现层对象。</h4></li>
+</ul>
+<h3 id="4-代码标准"><a href="#4-代码标准" class="headerlink" title="4.代码标准"></a><strong>4.代码标准</strong></h3><ul>
+<li><h4 id="必须结束标记"><a href="#必须结束标记" class="headerlink" title="必须结束标记"></a>必须结束标记</h4><h4 id="XHTML要求有严谨的结构，所有标签必须关闭。如果是单独不成对的标签，在标签最后加一个”-“来关闭它。"><a href="#XHTML要求有严谨的结构，所有标签必须关闭。如果是单独不成对的标签，在标签最后加一个”-“来关闭它。" class="headerlink" title="XHTML要求有严谨的结构，所有标签必须关闭。如果是单独不成对的标签，在标签最后加一个”/“来关闭它。"></a>XHTML要求有严谨的结构，所有标签必须关闭。如果是单独不成对的标签，在标签最后加一个”/“来关闭它。</h4><h4 id="例如-lt-br-gt"><a href="#例如-lt-br-gt" class="headerlink" title="例如:&lt;br /&gt;"></a>例如:<code>&lt;br /&gt;</code></h4><h4 id="例如：-lt-img-height-quot-80-quot-alt-quot-网页设计师-quot-src-quot-images-logo-w3cn-200x80-gif-quot-width-quot-200-quot-gt"><a href="#例如：-lt-img-height-quot-80-quot-alt-quot-网页设计师-quot-src-quot-images-logo-w3cn-200x80-gif-quot-width-quot-200-quot-gt" class="headerlink" title="例如：&lt;img height=&quot;80&quot; alt=&quot;网页设计师&quot; src=&quot;../images/logo_w3cn_200x80.gif&quot; width=&quot;200&quot; /&gt;"></a>例如：<code>&lt;img height=&quot;80&quot; alt=&quot;网页设计师&quot; src=&quot;../images/logo_w3cn_200x80.gif&quot; width=&quot;200&quot; /&gt;</code></h4></li>
+<li><h4 id="小写元素和属性名"><a href="#小写元素和属性名" class="headerlink" title="小写元素和属性名"></a>小写元素和属性名</h4><h4 id="XHTML对大小写是敏感的，-lt-title-gt-和-lt-TITLE-gt-是不同的标签。XHTML要求所有的标签和属性的名字都必须使用小写。"><a href="#XHTML对大小写是敏感的，-lt-title-gt-和-lt-TITLE-gt-是不同的标签。XHTML要求所有的标签和属性的名字都必须使用小写。" class="headerlink" title="XHTML对大小写是敏感的，&lt;title&gt;和&lt;TITLE&gt;是不同的标签。XHTML要求所有的标签和属性的名字都必须使用小写。"></a>XHTML对大小写是敏感的，<code>&lt;title&gt;</code>和<code>&lt;TITLE&gt;</code>是不同的标签。XHTML要求所有的标签和属性的名字都必须使用小写。</h4><h4 id="大小写夹杂也是不被认可的，通常dreamweaver自动生成的属性名字onMouseOver也必须修改成onmouseover。"><a href="#大小写夹杂也是不被认可的，通常dreamweaver自动生成的属性名字onMouseOver也必须修改成onmouseover。" class="headerlink" title="大小写夹杂也是不被认可的，通常dreamweaver自动生成的属性名字onMouseOver也必须修改成onmouseover。"></a>大小写夹杂也是不被认可的，通常dreamweaver自动生成的属性名字<code>onMouseOver</code>也必须修改成<code>onmouseover</code>。</h4></li>
+<li><h4 id="标记都必须合理嵌套"><a href="#标记都必须合理嵌套" class="headerlink" title="标记都必须合理嵌套"></a>标记都必须合理嵌套</h4><h4 id="例如：-lt-p-gt-lt-b-gt-lt-b-gt-lt-p-gt-就是说，一层一层的嵌套必须是严格对称。"><a href="#例如：-lt-p-gt-lt-b-gt-lt-b-gt-lt-p-gt-就是说，一层一层的嵌套必须是严格对称。" class="headerlink" title="例如：&lt;p&gt;&lt;b&gt;&lt;/b&gt;&lt;/p&gt;,就是说，一层一层的嵌套必须是严格对称。"></a>例如：<code>&lt;p&gt;&lt;b&gt;&lt;/b&gt;&lt;/p&gt;</code>,就是说，一层一层的嵌套必须是严格对称。</h4></li>
+<li><h4 id="属性必须括起来"><a href="#属性必须括起来" class="headerlink" title="属性必须括起来"></a>属性必须括起来</h4><h4 id="例如-lt-height-80-gt-必须修改为：-lt-height-quot-80-quot-gt"><a href="#例如-lt-height-80-gt-必须修改为：-lt-height-quot-80-quot-gt" class="headerlink" title="例如:&lt;height=80&gt;必须修改为：&lt;height=&quot;80&quot;&gt;"></a>例如:<code>&lt;height=80&gt;</code>必须修改为：<code>&lt;height=&quot;80&quot;&gt;</code></h4><h4 id="特殊情况：你需要在属性值里使用双引号，你可以用”，单引号可以使用-amp-apos-，例如：-lt-alt-quot-say-amp-apos-hello-amp-apos-quot-gt"><a href="#特殊情况：你需要在属性值里使用双引号，你可以用”，单引号可以使用-amp-apos-，例如：-lt-alt-quot-say-amp-apos-hello-amp-apos-quot-gt" class="headerlink" title="特殊情况：你需要在属性值里使用双引号，你可以用”，单引号可以使用&amp;apos;，例如：&lt;alt=&quot;say&amp;apos;hello&amp;apos;&quot;&gt;"></a>特殊情况：你需要在属性值里使用双引号，你可以用”，单引号可以使用<code>&amp;apos;</code>，例如：<code>&lt;alt=&quot;say&amp;apos;hello&amp;apos;&quot;&gt;</code></h4></li>
+<li><h4 id="特殊符号用编码表示"><a href="#特殊符号用编码表示" class="headerlink" title="特殊符号用编码表示"></a>特殊符号用编码表示</h4><h4 id="1-lt-，不是标签的一部分，都必须被编码为-amp-lt"><a href="#1-lt-，不是标签的一部分，都必须被编码为-amp-lt" class="headerlink" title="1. &lt;，不是标签的一部分，都必须被编码为&amp;lt; ;"></a>1. &lt;，不是标签的一部分，都必须被编码为<code>&amp;lt;</code> ;</h4><h4 id="2-gt-，不是标签的一部分，都必须被编码为-amp-gt"><a href="#2-gt-，不是标签的一部分，都必须被编码为-amp-gt" class="headerlink" title="2. &gt;，不是标签的一部分，都必须被编码为&amp;gt;;"></a>2. &gt;，不是标签的一部分，都必须被编码为<code>&amp;gt;</code>;</h4><h4 id="3-amp-，不是实体的一部分，都必须被编码为-amp-amp"><a href="#3-amp-，不是实体的一部分，都必须被编码为-amp-amp" class="headerlink" title="3. &amp;，不是实体的一部分，都必须被编码为&amp;amp;;"></a>3. &amp;，不是实体的一部分，都必须被编码为<code>&amp;amp;</code>;</h4><h4 id="4-不是实体的一部分，都必须被编码为-amp-nbsp"><a href="#4-不是实体的一部分，都必须被编码为-amp-nbsp" class="headerlink" title="4. ,不是实体的一部分，都必须被编码为&amp;nbsp;"></a>4. <code></code>,不是实体的一部分，都必须被编码为<code>&amp;nbsp;</code></h4></li>
+<li><h4 id="给所有属性赋值"><a href="#给所有属性赋值" class="headerlink" title="给所有属性赋值"></a>给所有属性赋值</h4><h4 id="XHTML规定所有属性都必须有一个值，没有值的就重复本身。"><a href="#XHTML规定所有属性都必须有一个值，没有值的就重复本身。" class="headerlink" title="XHTML规定所有属性都必须有一个值，没有值的就重复本身。"></a>XHTML规定所有属性都必须有一个值，没有值的就重复本身。</h4><h4 id="例如：-lt-td-nowrap-gt-lt-input-type-quot-checkbox-quot-name-quot-shirt-quot-value-quot-medium-quot-checked-gt"><a href="#例如：-lt-td-nowrap-gt-lt-input-type-quot-checkbox-quot-name-quot-shirt-quot-value-quot-medium-quot-checked-gt" class="headerlink" title="例如：&lt;td nowrap&gt; &lt;input type=&quot;checkbox&quot; name=&quot;shirt&quot; value=&quot;medium&quot;checked&gt;"></a>例如：<code>&lt;td nowrap&gt; &lt;input type=&quot;checkbox&quot; name=&quot;shirt&quot; value=&quot;medium&quot;checked&gt;</code></h4><h4 id="必须修改为：-lt-td-nowrap-quot-nowrap-quot-gt-lt-input-type-quot-checkbox-quot-name-quot-shirt-quot-value-quot-medium-quot-checked-quot-checked-quot-gt"><a href="#必须修改为：-lt-td-nowrap-quot-nowrap-quot-gt-lt-input-type-quot-checkbox-quot-name-quot-shirt-quot-value-quot-medium-quot-checked-quot-checked-quot-gt" class="headerlink" title="必须修改为：&lt;td nowrap=&quot;nowrap&quot;&gt; &lt;input type=&quot;checkbox&quot; name=&quot;shirt&quot;value=&quot;medium&quot; checked=&quot;checked&quot;&gt;"></a>必须修改为：<code>&lt;td nowrap=&quot;nowrap&quot;&gt; &lt;input type=&quot;checkbox&quot; name=&quot;shirt&quot;value=&quot;medium&quot; checked=&quot;checked&quot;&gt;</code></h4></li>
+<li><h4 id="在注释中不使用的符号"><a href="#在注释中不使用的符号" class="headerlink" title="在注释中不使用的符号"></a>在注释中不使用的符号</h4><h4 id="“–”只能发生在XHTML注释的开头和结束，也就是说，在内容中它们不再有效。例如下面的代码是无效的-lt-这里是注释-这里是注释-gt"><a href="#“–”只能发生在XHTML注释的开头和结束，也就是说，在内容中它们不再有效。例如下面的代码是无效的-lt-这里是注释-这里是注释-gt" class="headerlink" title="“–”只能发生在XHTML注释的开头和结束，也就是说，在内容中它们不再有效。例如下面的代码是无效的:&lt;!--这里是注释-----------这里是注释--&gt;"></a>“–”只能发生在XHTML注释的开头和结束，也就是说，在内容中它们不再有效。例如下面的代码是无效的:<code>&lt;!--这里是注释-----------这里是注释--&gt;</code></h4></li>
+</ul>
+<h3 id="5-测试标准"><a href="#5-测试标准" class="headerlink" title="5.测试标准"></a><strong>5.测试标准</strong></h3><h4 id="（1）标准测试的内容"><a href="#（1）标准测试的内容" class="headerlink" title="（1）标准测试的内容"></a><strong>（1）标准测试的内容</strong></h4><pre><code>#### **1. 页面校验**
+#### **2.CSS文档校验**
+#### **3.XHTML 1.0 标准**
+#### **4.W3C标准测试**
+#### **测试时一定要有文件类别宣告还有指定文件编码，才能顺利进行测试动作，开始打造一个标准的网站！**
+#### `&lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=gb2312&quot; /&gt;`</code></pre><h4 id="（2）W3C标准测试使用说明"><a href="#（2）W3C标准测试使用说明" class="headerlink" title="（2）W3C标准测试使用说明"></a><strong>（2）W3C标准测试使用说明</strong></h4><ul>
+<li><h4 id="XHTML-1-0文件类别宣告的正确写法-不可小写"><a href="#XHTML-1-0文件类别宣告的正确写法-不可小写" class="headerlink" title="XHTML 1.0文件类别宣告的正确写法 (不可小写)"></a>XHTML 1.0文件类别宣告的正确写法 (不可小写)</h4><h4 id="过度标准（Transitional）公共标识符称为-”-W3C-DTD-XHTML1-0Transitional-EN”。"><a href="#过度标准（Transitional）公共标识符称为-”-W3C-DTD-XHTML1-0Transitional-EN”。" class="headerlink" title="过度标准（Transitional）公共标识符称为:”-//W3C//DTD XHTML1.0Transitional//EN”。"></a>过度标准（Transitional）公共标识符称为:”-//W3C//DTD XHTML1.0Transitional//EN”。</h4><p>  <code>&lt;!DOCTYPE htmlPUBLIC &quot;-//W3C//DTD XHTML 1.0 Transitional//EN&quot;&gt;</code></p>
+<h4 id="框架标准（Frameset）公共标识符称为：“-W3C-DTD-XHTML-1-0-Frameset-EN”。"><a href="#框架标准（Frameset）公共标识符称为：“-W3C-DTD-XHTML-1-0-Frameset-EN”。" class="headerlink" title="框架标准（Frameset）公共标识符称为：“-//W3C//DTD XHTML 1.0 Frameset//EN”。"></a>框架标准（Frameset）公共标识符称为：“-//W3C//DTD XHTML 1.0 Frameset//EN”。</h4><p>  <code>&lt;!DOCTYPE htmlPUBLIC &quot;-//W3C//DTD XHTML 1.0 Frameset//EN&quot;&gt;</code></p>
+<h4 id="严格标准（Strict）-公共标识符称为：“-W3C-DTD-XHTML-1-0-Strict-EN”。"><a href="#严格标准（Strict）-公共标识符称为：“-W3C-DTD-XHTML-1-0-Strict-EN”。" class="headerlink" title="严格标准（Strict） 公共标识符称为：“-//W3C//DTD XHTML 1.0 Strict//EN”。"></a>严格标准（Strict） 公共标识符称为：“-//W3C//DTD XHTML 1.0 Strict//EN”。</h4><p>  <code>&lt;!DOCTYPE htmlPUBLIC &quot;-//W3C//DTD XHTML 1.0 Strict//EN&quot;&gt;</code></p>
+</li>
+<li><h4 id="所有网页头文件都必须改为标准格式"><a href="#所有网页头文件都必须改为标准格式" class="headerlink" title="所有网页头文件都必须改为标准格式"></a>所有网页头文件都必须改为标准格式</h4><div class="highlight-box"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;head&gt;</span><br><span class="line">&lt;meta</span><br><span class="line">       http-equiv&#x3D;&quot;content-type&quot;</span><br><span class="line">       content&#x3D;&quot;text&#x2F;html; charset&#x3D;gb2312&quot; &#x2F;&gt;</span><br><span class="line">&lt;meta http-equiv&#x3D;&quot;content-language&quot; content&#x3D;&quot;zh-cn&quot; &#x2F;&gt;</span><br><span class="line">&lt;meta name&#x3D;&quot;keywords&quot; content&#x3D;&quot;...&quot; &#x2F;&gt;</span><br><span class="line">&lt;meta name&#x3D;&quot;description&quot; content&#x3D;&quot;...&quot;&#x2F;&gt;</span><br><span class="line">&lt;title&gt;...&lt;&#x2F;title&gt;</span><br><span class="line">&lt;&#x2F;head&gt;</span><br></pre></td></tr></table></figure></div>
+</li>
+<li><h4 id="不允许使用target-quot-blank-quot"><a href="#不允许使用target-quot-blank-quot" class="headerlink" title="不允许使用target=&quot;_blank&quot;;"></a>不允许使用<code>target=&quot;_blank&quot;;</code></h4><p>  在HTML4.01可以使用<code>target=&quot;_blank&quot;</code>,但XHTML1.0是不被允许的.</p>
+</li>
+</ul>
+<div class="highlight-box"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">function 外部链接()		&#x2F;&#x2F;unicode javascript</span><br><span class="line">&#123;</span><br><span class="line">      if (!document.getElementsByTagName) return;</span><br><span class="line">      var anchors &#x3D; document.getElementsByTagName(&quot;a&quot;);</span><br><span class="line">      for (var i&#x3D;0; i&lt;anchors.length; i++)</span><br><span class="line">      &#123;</span><br><span class="line">            var anchor &#x3D; anchors;</span><br><span class="line">            if (anchor.getAttribute(&quot;href&quot;) &amp;&amp;</span><br><span class="line">            anchor.getAttribute(&quot;rel&quot;) &#x3D;&#x3D; &quot;external&quot;)</span><br><span class="line">            anchor.target &#x3D; &quot;_blank&quot;;</span><br><span class="line">      &#125;</span><br><span class="line">&#125; </span><br><span class="line">window.onload &#x3D; 外部链接;</span><br></pre></td></tr></table></figure></div>
+<pre><code>#### 你可以把它保存成一个.js文件(比如外部链接.js)，然后通过外部联接方法调用：</code></pre><p><code>&lt;script type=&quot;text/javascript&quot; src=&quot;外部链接.js&quot;&gt;&lt;/script&gt;</code></p>
+<ul>
+<li><h4 id="XHTML-1-0要求所有的标签必须关闭"><a href="#XHTML-1-0要求所有的标签必须关闭" class="headerlink" title="XHTML 1.0要求所有的标签必须关闭"></a>XHTML 1.0要求所有的标签必须关闭</h4><h4 id="所有没有成对的空标签必须以-gt-结尾-例如："><a href="#所有没有成对的空标签必须以-gt-结尾-例如：" class="headerlink" title="所有没有成对的空标签必须以 /&gt;结尾,例如："></a>所有没有成对的空标签必须以 /&gt;结尾,例如：</h4><p>  <code>&lt;hr /&gt;</code><br>  <code>&lt;input type=&quot;text&quot; name=&quot;name&quot; /&gt;</code></p>
+</li>
+<li><h4 id="所有标签元素名都使用小写"><a href="#所有标签元素名都使用小写" class="headerlink" title="所有标签元素名都使用小写"></a>所有标签元素名都使用小写</h4><h4 id="错误-lt-HTML-gt-lt-TITLE-gt-lt-HEAD-gt-lt-BODY-gt"><a href="#错误-lt-HTML-gt-lt-TITLE-gt-lt-HEAD-gt-lt-BODY-gt" class="headerlink" title="错误 &lt;HTML&gt; &lt;TITLE&gt; &lt;HEAD&gt; &lt;BODY&gt;"></a>错误 <code>&lt;HTML&gt; &lt;TITLE&gt; &lt;HEAD&gt; &lt;BODY&gt;</code></h4><h4 id="正确-lt-html-gt-lt-title-gt-lt-head-gt-lt-body-gt"><a href="#正确-lt-html-gt-lt-title-gt-lt-head-gt-lt-body-gt" class="headerlink" title="正确&lt;html&gt; &lt;title&gt; &lt;head&gt; &lt;body&gt;"></a>正确<code>&lt;html&gt; &lt;title&gt; &lt;head&gt; &lt;body&gt;</code></h4></li>
+<li><h4 id="同一个id选择器不可同时使用"><a href="#同一个id选择器不可同时使用" class="headerlink" title="同一个id选择器不可同时使用"></a>同一个id选择器不可同时使用</h4><h4 id="一个网页中id-”xx”同一个选择器不能重复使用-若需要重复请用class-”xx”"><a href="#一个网页中id-”xx”同一个选择器不能重复使用-若需要重复请用class-”xx”" class="headerlink" title="一个网页中id=”xx”同一个选择器不能重复使用,若需要重复请用class=”xx”"></a>一个网页中id=”xx”同一个选择器不能重复使用,若需要重复请用class=”xx”</h4></li>
+<li><h4 id="标签必须是一对"><a href="#标签必须是一对" class="headerlink" title="标签必须是一对"></a>标签必须是一对</h4><p>  例如：<code>&lt;p&gt;&lt;/p&gt;</code></p>
+</li>
+<li><h4 id="正确标签顺序"><a href="#正确标签顺序" class="headerlink" title="正确标签顺序"></a>正确标签顺序</h4></li>
+<li><h4 id="JavaScript写法"><a href="#JavaScript写法" class="headerlink" title="JavaScript写法"></a>JavaScript写法</h4><h4 id="W3C标准必须为程式指定类型type-text-javascript-所以要写为"><a href="#W3C标准必须为程式指定类型type-text-javascript-所以要写为" class="headerlink" title="W3C标准必须为程式指定类型type=text/javascript,所以要写为"></a>W3C标准必须为程式指定类型type=text/javascript,所以要写为</h4><h4 id="lt-scripttype-quot-text-javascript-quot-gt-或者"><a href="#lt-scripttype-quot-text-javascript-quot-gt-或者" class="headerlink" title="&lt;scripttype=&quot;text/javascript&quot;&gt;或者"></a><code>&lt;scripttype=&quot;text/javascript&quot;&gt;</code>或者</h4><h4 id="lt-script-language-quot-javascript-quot-type-quot-text-javascript-quot-gt"><a href="#lt-script-language-quot-javascript-quot-type-quot-text-javascript-quot-gt" class="headerlink" title="&lt;script language=&quot;javascript&quot; type=&quot;text/javascript&quot;&gt;"></a><code>&lt;script language=&quot;javascript&quot; type=&quot;text/javascript&quot;&gt;</code></h4><h4 id="载入外部-js独立档案的写法"><a href="#载入外部-js独立档案的写法" class="headerlink" title="载入外部.js独立档案的写法"></a>载入外部.js独立档案的写法</h4><p>  <code>&lt;script type=&quot;text/javascript&quot; src=&quot;script.js&quot;&gt;&lt;/script&gt;</code></p>
+</li>
+<li><h4 id="绝对不可省略单引号或者双引号"><a href="#绝对不可省略单引号或者双引号" class="headerlink" title="绝对不可省略单引号或者双引号"></a>绝对不可省略单引号或者双引号</h4><h4 id="错误-lt-img-src-bg-gif-width-140-height-30-alt-text-gt"><a href="#错误-lt-img-src-bg-gif-width-140-height-30-alt-text-gt" class="headerlink" title="错误: &lt;img src=bg.gif width=140 height=30 alt=text /&gt;"></a>错误: <code>&lt;img src=bg.gif width=140 height=30 alt=text /&gt;</code></h4><h4 id="正确-lt-img-src-quot-bg-gif-quot-width-quot-140-quot-height-quot-30-quot-alt-quot-text-quot-gt"><a href="#正确-lt-img-src-quot-bg-gif-quot-width-quot-140-quot-height-quot-30-quot-alt-quot-text-quot-gt" class="headerlink" title="正确:&lt;img src=&quot;bg.gif&quot; width=&quot;140&quot; height=&quot;30&quot; alt=&quot;text&quot; /&gt;"></a>正确:<code>&lt;img src=&quot;bg.gif&quot; width=&quot;140&quot; height=&quot;30&quot; alt=&quot;text&quot; /&gt;</code></h4></li>
+<li><h4 id="图片标签加上文字说明alt-quot-文字说明-quot"><a href="#图片标签加上文字说明alt-quot-文字说明-quot" class="headerlink" title="图片标签加上文字说明alt=&quot;文字说明&quot;"></a>图片标签加上文字说明<code>alt=&quot;文字说明&quot;</code></h4><p>  <code>&lt;img src=&quot;bg.gif&quot; height=&quot;50&quot; border=&quot;0&quot; alt=&quot;说明文字&quot; /&gt;</code></p>
+</li>
+<li><h4 id="背景音乐不允许使用-bgsound标签"><a href="#背景音乐不允许使用-bgsound标签" class="headerlink" title="背景音乐不允许使用 bgsound标签"></a>背景音乐不允许使用 <code>bgsound</code>标签</h4><p>  正确写法如下，然后通过外部链接方法调用</p>
+  <div class="highlight-box"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">	var MSIE&#x3D;navigator.userAgent.indexOf(&quot;MSIE&quot;);</span><br><span class="line">	var NETS&#x3D;navigator.userAgent.indexOf(&quot;Netscape&quot;);</span><br><span class="line">	var OPER&#x3D;navigator.userAgent.indexOf(&quot;Opera&quot;);</span><br><span class="line">	if((MSIE&gt;-1) || (OPER&gt;-1)) &#123;</span><br><span class="line">	document.write(&quot;&lt;BGSOUND SRC&#x3D;背景音乐地址 LOOP&#x3D;INFINITE&gt;&quot;);</span><br><span class="line">	&#125; else &#123;</span><br><span class="line">	document.write(&quot;&lt;EMBED SRC&#x3D;背景音乐地址 AUTOSTART&#x3D;TRUE &quot;);</span><br><span class="line">	document.write(&quot;HIDDEN&#x3D;true VOLUME&#x3D;100 LOOP&#x3D;TRUE&gt;&quot;);</span><br><span class="line">	&#125;</span><br><span class="line">	&#96;&#96;&#96;	</span><br><span class="line"></span><br><span class="line">* #### 不允许使用框架标签</span><br><span class="line">    #### 用js通过外链引入页面</span><br></pre></td></tr></table></figure></div>
+<p>  function ifr(url,w,h){</p>
+<pre><code>document.write(&apos;&lt;iframe id=&quot;ifr&quot; name=&quot;ifr&quot; width=&quot;&apos;+w+&apos;&quot; height=&quot;&apos;+h+&apos;&quot; border=&quot;0&quot; frameborder=&quot;0&quot; scrolling=&quot;no&quot; src=&quot;&apos;+url+&apos;&quot;&gt;&lt;/iframe&gt;&apos;);}</code></pre><pre><code></code></pre></li>
+<li><h4 id="注解文字不可包含”–”符号"><a href="#注解文字不可包含”–”符号" class="headerlink" title="注解文字不可包含”–”符号"></a>注解文字不可包含”–”符号</h4><h4 id="错误-lt-OEC-SPACE-gt"><a href="#错误-lt-OEC-SPACE-gt" class="headerlink" title="错误&lt;!-- OEC--SPACE --&gt;"></a>错误<code>&lt;!-- OEC--SPACE --&gt;</code></h4><h4 id="正确-lt-OECSPACE-gt"><a href="#正确-lt-OECSPACE-gt" class="headerlink" title="正确 &lt;!-- OECSPACE --&gt;"></a>正确 <code>&lt;!-- OECSPACE --&gt;</code></h4></li>
+<li><h4 id="正确使用CSS样式表"><a href="#正确使用CSS样式表" class="headerlink" title="正确使用CSS样式表"></a>正确使用<a href="https://baike.baidu.com/item/CSS/5457?fromtitle=CSS%E6%A0%B7%E5%BC%8F%E8%A1%A8&fromid=224735" target="_blank" rel="noopener">CSS样式表</a></h4></li>
+<li><h4 id="非标签部分以编码表示"><a href="#非标签部分以编码表示" class="headerlink" title="非标签部分以编码表示"></a>非标签部分以编码表示</h4></li>
+<li><h4 id="所有属性都必须有值"><a href="#所有属性都必须有值" class="headerlink" title="所有属性都必须有值"></a>所有属性都必须有值</h4></li>
+</ul>
+<h3 id="6-优点"><a href="#6-优点" class="headerlink" title="6.优点"></a><strong>6.优点</strong></h3><h3 id="1-对于访问者"><a href="#1-对于访问者" class="headerlink" title="(1)对于访问者"></a><em>(1)对于访问者</em></h3><pre><code>**文件下载与页面显示速度更快。**
+**内容能被更多的用户所访问（包括失明、视弱、色盲等残障人士）。**
+**内容能被更广泛的设备所访问(包括屏幕阅读机,手持设备,搜索机器人,打印机,电冰箱等)。**
+**用户能够通过样式选择定制自己的表现界面。**
+**所有页面都能提供适于打印的版本。**</code></pre><h3 id="2-对于网站所有者"><a href="#2-对于网站所有者" class="headerlink" title="(2)对于网站所有者"></a><em>(2)对于网站所有者</em></h3><pre><code>**更少的代码和组件，容易维护。**
+**带宽要求降低（代码更简洁），成本降低。举个例子：当 ESPN.com 使用 CSS改版后，每天节约超过两兆字节（terabytes）的带宽。**
+**更容易被搜寻引擎搜索到。**
+**改版方便，不需要变动页面内容。**
+**提供打印版本而不需要复制内容。**
+**提高网站易用性。在美国，有严格的法律条款（Section 508）来约束政府网站必须达到一定的易用性，其他国家也有类似的要求。**</code></pre><h3 id="7-误区"><a href="#7-误区" class="headerlink" title="7.误区"></a><strong>7.误区</strong></h3><pre><code>**不为通过校验才标准化**
+    web标准的本意是实现内容(结构)和表现分离，就是将样式剥离出来放在单独的css文件中。这样做的好处是可以分别处理内容和表现，也方便搜索和内容的再利用。
+    W3C校验仅仅是帮助你检查XHTML代码的书写是否规范，css的属性是否都在CCS2的规范内。代码的标准化仅仅是第一步，不是说通过的校验，我的网页就标准化了。我们不是为了虚名，或者向别人炫耀：“看我的页面通过了校验”而去标准化，我们的目的是为了使自己的网页设计工作更有效率，为了缩小网页尺寸，为了能够在任何浏览器和网络设备中正常浏览。
+
+**不用传统表格思维来套div**
+
+**不必每块内容都建id**
+    我们知道内容都是有结构的(如果不明白，请[点击阅读](http://www.w3cn.org/article/tips/2004/43),理解表现和结构相分离 ,相同的结构的内容我们可以用同一个样式来定义，比如相同级别的标题、正文、图片。对于多次引用的样式可以用class来定义，不需要每个都用id；另外也不是说一定要用，你完全可以用别的来代替，同样都是块级元素，一样有盒模型的七个参数，仅仅方便浮动。</code></pre>
+      
+    </div>
+    
+  </div>
+  
+  
+</article>
+
+  
 
 
 
@@ -466,7 +645,7 @@
   <div class="widget-box">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/react%E7%9B%B8%E5%85%B3/" rel="tag">react相关</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8E%9F%E7%94%9FJS/" rel="tag">原生JS</a></li></ul>
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/html-CSS/" rel="tag">html+CSS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/react%E7%9B%B8%E5%85%B3/" rel="tag">react相关</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8E%9F%E7%94%9FJS/" rel="tag">原生JS</a></li></ul>
     </div>
   </div>
 
@@ -476,7 +655,7 @@
   <div class="widget-box">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/react%E7%9B%B8%E5%85%B3/" style="font-size: 20px;">react相关</a> <a href="/tags/%E5%8E%9F%E7%94%9FJS/" style="font-size: 10px;">原生JS</a>
+      <a href="/tags/html-CSS/" style="font-size: 15px;">html+CSS</a> <a href="/tags/react%E7%9B%B8%E5%85%B3/" style="font-size: 20px;">react相关</a> <a href="/tags/%E5%8E%9F%E7%94%9FJS/" style="font-size: 10px;">原生JS</a>
     </div>
   </div>
 
@@ -485,7 +664,7 @@
   <div class="widget-box">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li></ul>
     </div>
   </div>
 
