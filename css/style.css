@@ -180,7 +180,7 @@ html, body, #fullpage{
   /* display: none; */
 }
 #wrapper {
-  background-image: url('../images/bg.jpg');
+  background-image: url('../images/bg.jpeg');
   background-color: #C7C9EA;
   background-repeat: no-repeat;
   background-attachment: fixed;
@@ -248,6 +248,9 @@ html, body, #fullpage{
   display: none;
 }
 
+.nav-item {
+  color: #ddd;
+}
 .mobile-nav-link {
   display: block;
   text-align: center;
@@ -296,15 +299,16 @@ html, body, #fullpage{
   margin-bottom: 50px;
   position: relative;
   padding: 30px;
-  background: rgba(255, 255, 255, .85)  
+  background: rgba(255, 255, 255, .85);
+  border-radius: 20px; 
 }
 .widget-box::before, .widget-box::after {
   content: "";
   display: block;
   width: 40%;
   height: 80px;
-  background: url('../images/icons/css_window_frame.png');
-  background-size: cover;
+  /* background: url('../images/icons/css_window_frame.png');
+  background-size: cover; */
   position: absolute;
   z-index: 1;
 }
@@ -319,8 +323,8 @@ html, body, #fullpage{
 }
 .widget-title {
   font-size: 16px;
-  color: #be7e4a;
-  /* color: rgb(21, 139, 184) */
+  /* color: #be7e4a; */
+  color: rgb(51, 59, 150);
 }
 .widget {
   z-index: 2;
@@ -351,6 +355,7 @@ html, body, #fullpage{
 }
 .article {
   margin-bottom: 50px;
+  border-radius: 20px;
 }
 .article-title {
   font-size: 1.7em;
