@@ -61,6 +61,86 @@
       <div id="middlecontent" title class="global-width sidebar-left">
         <section id="main">
   
+    <article id="post-virtualDOM" class="article global-container article-type-post" itemscope itemprop="blogPost">
+  
+    <header class="article-header">
+      
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/04/10/virtualDOM/">react virtual DOM</a>
+    </h1>
+  
+
+    </header>
+  
+  <div class="article-meta">
+    <a href="/2020/04/10/virtualDOM/" class="article-date">
+  <time datetime="2020-04-09T17:24:23.000Z" itemprop="datePublished">2020-04-10</time>
+</a>
+    
+    
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/react%E7%9B%B8%E5%85%B3/" rel="tag">react相关</a></li></ul>
+
+  </div>
+  
+
+  <div class="article-inner">
+    
+    <div class="article-content article-content-cloud" itemprop="articleBody">
+      
+        <h4 id="⭐-virtual-DOM-是什么？"><a href="#⭐-virtual-DOM-是什么？" class="headerlink" title="⭐ virtual DOM 是什么？"></a>⭐ virtual DOM 是什么？</h4><ul>
+<li>virtual DOM实际上是浏览器端通过JS实现的一套DOM API（为了解决频繁的数据更新引来的性能问题）</li>
+<li>基于react进行开发时，所有的DOM树都是通过virtual DOM构造的，react的所有工作都是基于virtual DOM来完成的</li>
+<li>react 在virtualDOM上实现了diff算法，数据更新时，会通过diff来寻找更新节点，只对变化的部分进行浏览器的DOM更新</li>
+<li>因为virtual DOM只是一个JS 对象，而且面对原生DOM进行操作的只是数据变更的节点，所以能够达到提高性能的目的</li>
+</ul>
+<p>构建一个简易的virtual DOM，只需要具备一个DOM标签所需要的基本元素即可</p>
+<div class="highlight-box"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; eg</span><br><span class="line">let reactDOM &#x3D; &#123;</span><br><span class="line">    tagName: &#39;div&#39;,</span><br><span class="line">    properties: &#123;</span><br><span class="line">        style: &#123;&#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    children: [],</span><br><span class="line">    key: 1</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+<hr>
+<h4 id="⭐-virtual-DOM的节点类型"><a href="#⭐-virtual-DOM的节点类型" class="headerlink" title="⭐ virtual DOM的节点类型"></a>⭐ virtual DOM的节点类型</h4><ul>
+<li>virtual DOM中的节点称为react DOM，分为reactElement，reactFragment，reactText</li>
+<li>其中reactElement又分为reactComponentElement，reactDomElement</li>
+<li>可以用代码描述<div class="highlight-box"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">reactNode &#x3D; reactElement | reactFragment | reactText;</span><br><span class="line">reactElement &#x3D; reactComponentElement | reactDomElement;</span><br><span class="line">reactDomElement &#x3D; &#123;</span><br><span class="line">    type: String,</span><br><span class="line">    props: &#123;</span><br><span class="line">        children: reactNodeList,</span><br><span class="line">        style: String,</span><br><span class="line">        etc</span><br><span class="line">    &#125;,</span><br><span class="line">    key: String | Boolean | Number | null,</span><br><span class="line">    ref: String | null</span><br><span class="line">&#125;;</span><br><span class="line">reactComponentElement&lt;Tprops&gt; &#x3D; &#123;</span><br><span class="line">    type: ReactClass&lt;Tprops&gt;,</span><br><span class="line">    peops: Tprops,</span><br><span class="line">    key: String | Boolean | Number | null,</span><br><span class="line">    ref: String | null</span><br><span class="line">&#125;;</span><br><span class="line">reactFragment &#x3D; Array&lt;reactNode | reactEmpty&gt;;</span><br><span class="line">reactText &#x3D; String | Number;</span><br><span class="line">reactNodeList &#x3D; reactNode | reactEmpty;</span><br><span class="line">reactEmpty &#x3D; null | undefined | Boolean;</span><br></pre></td></tr></table></figure></div>
+</li>
+</ul>
+<hr>
+<h4 id="⭐-怎么样可以实现一个virtual-DOM呢？分为以下几步"><a href="#⭐-怎么样可以实现一个virtual-DOM呢？分为以下几步" class="headerlink" title="⭐ 怎么样可以实现一个virtual DOM呢？分为以下几步"></a>⭐ <strong>怎么样可以实现一个virtual DOM呢？分为以下几步</strong></h4><ol>
+<li>创建react元素；</li>
+<li>初始化组件入口；</li>
+<li>创建文本组件</li>
+<li>创建DOM标签组件</li>
+<li>自定义组件</li>
+<li>最后在有数据或者DOM更新时，使用diff算法去寻找变更的virtual DOM更新到真实DOM中（这里的diff算法稍后再说）</li>
+</ol>
+<hr>
+<pre><code>接下来伪代码简要概述实现过程</code></pre><h4 id="1-创建react元素-通过JSX创建的虚拟元素最终都会被编译成调用react的creatElement方法"><a href="#1-创建react元素-通过JSX创建的虚拟元素最终都会被编译成调用react的creatElement方法" class="headerlink" title="1. 创建react元素: 通过JSX创建的虚拟元素最终都会被编译成调用react的creatElement方法"></a>1. 创建react元素: 通过JSX创建的虚拟元素最终都会被编译成调用react的creatElement方法</h4><ul>
+<li>creatElement只是做了简单的参数修正，返回一个reactElement(虚拟元素)实例<div class="highlight-box"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">reactElement.creatElement &#x3D; function() &#123;</span><br><span class="line">    &#x2F;&#x2F; a. 初始化参数</span><br><span class="line">    let propName, props, key, ref, self, source;</span><br><span class="line">    &#x2F;&#x2F; b. 如果config存在，提取里面的内容</span><br><span class="line">    if(config) &#123;</span><br><span class="line">        &#x2F;&#x2F; 提取config的内容，config.ref, config.key等</span><br><span class="line">        &#x2F;&#x2F; 复制config里面的内容到props（id, className）</span><br><span class="line">    &#125;</span><br><span class="line">    &#x2F;&#x2F; c. 处理children，全部挂载到props的children属性上</span><br><span class="line">    let childrenLength &#x3D; arguments.length - 2;</span><br><span class="line">    if(childrenLength &#x3D;&#x3D;&#x3D; 1) &#123;</span><br><span class="line">        &#x2F;&#x2F; 如果只有一个参数，直接赋值</span><br><span class="line">    &#125; else if(childrenLength &gt; 1) &#123;</span><br><span class="line">        &#x2F;&#x2F; 合并处理</span><br><span class="line">        let childrenArray &#x3D; Array(childrenLength);</span><br><span class="line">        props.children &#x3D; childrenArray;</span><br><span class="line">    &#125;</span><br><span class="line">    &#x2F;&#x2F; d. 返回一个reactElement实例对象</span><br><span class="line">    return reactElement(type, key, ref, self, source, reactCurrentOwner.current, props);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+</li>
+</ul>
+<h4 id="2-初始化组件入口-当react组件初始化时，会调用初始化函数instantiateReactComponent"><a href="#2-初始化组件入口-当react组件初始化时，会调用初始化函数instantiateReactComponent" class="headerlink" title="2. 初始化组件入口: 当react组件初始化时，会调用初始化函数instantiateReactComponent"></a>2. 初始化组件入口: 当react组件初始化时，会调用初始化函数instantiateReactComponent</h4><ul>
+<li>instantiateReactComponent这个函数通过判断node类型来区分不同的组件入口<div class="highlight-box"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">function instantiateReactComponent(node, compositeType) &#123;</span><br><span class="line">    let instance;</span><br><span class="line">    if(node &#x3D;&#x3D;&#x3D; null || node &#x3D;&#x3D;&#x3D; false) &#123;</span><br><span class="line">        &#x2F;&#x2F; node为空时，初始化空组件</span><br><span class="line">    &#125;</span><br><span class="line">    if(typeof node &#x3D;&#x3D;&#x3D; &#39;object&#39;) &#123;</span><br><span class="line">        &#x2F;&#x2F; node是对象时，是DOM标签组件&#x2F;自定义组件</span><br><span class="line">        if(typeof Element.type &#x3D;&#x3D;&#x3D; &#39;string&#39;) &#123;</span><br><span class="line">            &#x2F;&#x2F; element类型为字符串时，初始化DOM标签组件</span><br><span class="line">        &#125; else &#123;</span><br><span class="line">            &#x2F;&#x2F; 初始化自定义组件</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    if (typeof node &#x3D;&#x3D;&#x3D; &#39;string&#39; || typeof node &#x3D;&#x3D;&#x3D; &#39;number&#39;) &#123;</span><br><span class="line">        &#x2F;&#x2F; 初始化文本组件</span><br><span class="line">    &#125;</span><br><span class="line">    &#x2F;&#x2F; 其他类型不做处理</span><br><span class="line">    return instance;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+</li>
+</ul>
+<h4 id="3-创建文本组件：创建组件-–-判断创建方式-–-更新文本内容"><a href="#3-创建文本组件：创建组件-–-判断创建方式-–-更新文本内容" class="headerlink" title="3. 创建文本组件：创建组件 – 判断创建方式 – 更新文本内容"></a>3. 创建文本组件：创建组件 – 判断创建方式 – 更新文本内容</h4><ul>
+<li>通过createElement来创建的文本组件，会被带上标签和domID，否则直接返回文本内容<div class="highlight-box"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; 1. 通过createElement来创建的文本组件，会被带上标签和domID，否则直接返回文本内容</span><br><span class="line">let ReactDOMTextComponent &#x3D; function (next) &#123;</span><br><span class="line">    &#x2F;&#x2F; 先保存当前的文本字符</span><br><span class="line">    &#x2F;&#x2F; 再给文本字符添加属性</span><br><span class="line">&#125;</span><br><span class="line">&#x2F;&#x2F; 2. 给ReactDOMTextComponent的原型添加mountComponent方法，判断创建方式</span><br><span class="line">Object.assign(ReactDOMTextComponent.prototype, &#123;</span><br><span class="line">    mountComponent: function(transaction, nativeParent, nativeContainerInfo, context) &#123;</span><br><span class="line">        &#x2F;&#x2F; 如果使用createElement来创建文本标签，该文本会带上标签和domId</span><br><span class="line">        if(transaction.useCreatElement) &#123;</span><br><span class="line">            &#x2F;&#x2F; 开始标签 -- 创建文本节点 -- 结束标签</span><br><span class="line">            return &#39;带标签的文本&#39;;</span><br><span class="line">        &#125; else &#123;</span><br><span class="line">            &#x2F;&#x2F; 静态页面直接返回文本</span><br><span class="line">            if(transaction.renderToStaticMarkup) &#123;</span><br><span class="line">                return &#39; &#39;;</span><br><span class="line">            &#125;</span><br><span class="line">            return &#39;注释掉标签的文本内容&#39;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br><span class="line">&#x2F;&#x2F; 3. 更新文本内容</span><br><span class="line">reveiveComponent &#x3D; function(nextComponent, transaction) &#123;</span><br><span class="line">    if(nextText !&#x3D;&#x3D; this.currentElement) &#123;</span><br><span class="line">        &#x2F;&#x2F; replace</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+</li>
+</ul>
+<h4 id="4-创建DOM标签组件-reactDOMComponent针对virtual-DOM标签的处理主要分为以下两个部分："><a href="#4-创建DOM标签组件-reactDOMComponent针对virtual-DOM标签的处理主要分为以下两个部分：" class="headerlink" title="4. 创建DOM标签组件: reactDOMComponent针对virtual DOM标签的处理主要分为以下两个部分："></a>4. 创建DOM标签组件: reactDOMComponent针对virtual DOM标签的处理主要分为以下两个部分：</h4><pre><code>1. 属性的更新（包括样式更新，属性更新，事件处理等）
+2. 子节点的更新（包括更新内容，更新子节点，diff实现）</code></pre><p>（源码实现有点多，大概节奏如上，还没来得及梳理…）</p>
+<h4 id="5-自定义组件"><a href="#5-自定义组件" class="headerlink" title="5. 自定义组件:"></a>5. 自定义组件:</h4><pre><code>reactCompositeComponent自定义组件实现了一整套的react生命周期和setState机制
+即自定义组件是在生命周期的环境中进行的更新属性，内容和子节点的操作，与reactDOMComponent类似</code></pre>
+      
+    </div>
+    
+  </div>
+  
+  
+</article>
+
+  
     <article id="post-hocRenderHook" class="article global-container article-type-post" itemscope itemprop="blogPost">
   
     <header class="article-header">
@@ -676,6 +756,10 @@
       <ul>
         
           <li>
+            <a href="/2020/04/10/virtualDOM/">react virtual DOM</a>
+          </li>
+        
+          <li>
             <a href="/2020/04/03/hocRenderHook/">对比分析HOC,render props,react hook</a>
           </li>
         
@@ -689,10 +773,6 @@
         
           <li>
             <a href="/2020/04/01/react_cssModule/">react样式处理&amp;CSS module</a>
-          </li>
-        
-          <li>
-            <a href="/2020/04/01/hello-world/">使用hexo+github创建博客</a>
           </li>
         
       </ul>
