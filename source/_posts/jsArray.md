@@ -108,3 +108,36 @@ console.log(reduceArray);
 // 15
 ```
 
+### 3. 实现一个filter方法
+
+- filter: filter返回一个新的数组，数组里包含参数里所有被保留的项
+- 这个方法只接收一个参数，就是数组的当前项,回调函数返回一个布尔类型，来决定当前参数的去留
+```
+Array.prototype.filter = function(callbackFn, thisArg) {
+    // 处理this异常
+    if(this === null || this === undefined) {
+        throw new TypeError("Cannot read property 'map' of null or undefined");
+    }
+    // 处理回调异常
+    if(Object.prototype.toString.call(callbackFn) !== '[object Function]') {
+        throw new TypeError("`${callbackFn}` is not a function");
+    }
+    let o = Object(this);
+
+    // 新数组
+    let length = 0;
+    let array = [];
+    for(let i = 0; i < o.length; i++) {
+        if(i in o) {
+            if(callbackFn.call(thisArg, o[i], i, o)) {
+                array[length++] = o[i];
+            }
+        }
+    }
+    return array;
+}
+let array = [1, 2, 3, 4, 5];
+let filterArray = array.filter(item => item % 2);
+console.log(filterArray);
+// [1, 3, 5]
+```
