@@ -61,6 +61,64 @@
       <div id="middlecontent" title class="global-width sidebar-left">
         <section id="main">
   
+    <article id="post-react生命周期" class="article global-container article-type-post" itemscope itemprop="blogPost">
+  
+    <header class="article-header">
+      
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/04/19/react%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F/">react生命周期</a>
+    </h1>
+  
+
+    </header>
+  
+  <div class="article-meta">
+    <a href="/2020/04/19/react%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F/" class="article-date">
+  <time datetime="2020-04-19T10:02:55.725Z" itemprop="datePublished">2020-04-19</time>
+</a>
+    
+    
+  </div>
+  
+
+  <div class="article-inner">
+    
+    <div class="article-content article-content-cloud" itemprop="articleBody">
+      
+        <h4 id="⭐react生命周期图解"><a href="#⭐react生命周期图解" class="headerlink" title="⭐react生命周期图解"></a>⭐react生命周期图解</h4><p><img src="https://b.bdstatic.com/searchbox/icms/searchbox/img/react%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F%E6%89%A7%E8%A1%8C%E9%A1%BA%E5%BA%8F.png" alt="react生命周期图解"></p>
+<h4 id="⭐react生命周期分有三个大的阶段"><a href="#⭐react生命周期分有三个大的阶段" class="headerlink" title="⭐react生命周期分有三个大的阶段"></a>⭐react生命周期分有三个大的阶段</h4><pre><code>由于getDefaultProps是通过构造函数进行管理的，所以不在声明周期的三个阶段内，所以只会执行一次</code></pre><p><img src="https://b.bdstatic.com/searchbox/icms/searchbox/img/%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F%E4%B8%89%E4%B8%AA%E9%98%B6%E6%AE%B5.png" alt="生命周期的三个大阶段"></p>
+<ol>
+<li>mounting阶段：负责管理生命周期中的getInitialState, componentWillMount, render, componentDidMount</li>
+<li>recieve_props阶段：负责管理生命周期中的componentWillRecieveProps, shouldComponentUpdate, componentWillUpdate, render, compoenntDidUpdate</li>
+<li>unmounting阶段：负责管理生命周期中的componentWillUnmount</li>
+</ol>
+<h4 id="1-mountComponent阶段："><a href="#1-mountComponent阶段：" class="headerlink" title="1. mountComponent阶段："></a>1. mountComponent阶段：</h4><ol>
+<li>错误处理方法：performInitialMountWithErrorHandling</li>
+<li>初始化挂载方法：performInitialMount<br> i. 如果存在componentWillMount，调用，但是不会触发re-render，而是会进行state合并<br> ii. 如果不是无状态组件，直接开始渲染<br> iii. 得到对应的component类实例</li>
+<li>初始化组件，渲染标记，注册事件监听器<br> i. 获取当前元素对应的上下文<br> ii. 初始化公共类<br> iii. 判断组件是否为无状态组件，若是，不会更新队列，只专注于渲染<br> iv. 初始化state<br> v. 错误处理，挂载出错时调用错误处理方法：performInitialMountWithErrorHandling，否则调用初始化挂载方法：performInitialMount方法初始化挂载<br> vi. 最后，如果存在componentDidMount生命周期，调用</li>
+</ol>
+<h4 id="2-updateComponent阶段"><a href="#2-updateComponent阶段" class="headerlink" title="2. updateComponent阶段"></a>2. updateComponent阶段</h4><pre><code>componentWillRecieveProps， shouldComponentUpdate， componentWillUpdate中调用setstate不会re-render，只会进行state合并，
+因为此时的state仍然是未更新数据，获取不到最新的state，所以只有render&amp;compoenntDidUpdate中才能获取到更新后的state</code></pre><ol>
+<li>render渲染组件的方法<br> i. 如果需要更新，则继续更新组件，如果不需要，继续渲染，然后拿到更新后的component实例<br> ii. 最后使用render递归渲染</li>
+<li>组件确定要更新时，调用即将更新的方法：_performComponentUpdate<br> i. 如果存在componentDidMount，那就将props, state等保存一份<br> ii. 如果存在componentWillUpdate，则调用componentWillUpdate生命周期方法<br> iii. 更新props, state,还有容易忽略的context<br> iv. 调用render组件重新render<br> v. 当组件更新完成之后，如果存在compoenntDidUpdate，则调用</li>
+<li>组件更新方法：updateComponent<br> i. 如果存在componentWillRecieveProps，调用<br> ii. 将新的state合并到更新队列，即nextSate就是最新的state<br> iii. 更新队列&amp;shouldComponentUpdate的状态，判断是否需要进行组件更新<br> iv. 确定更新，调用即将更新方法_performComponentUpdate，不确定，更新props,state,context等状态</li>
+</ol>
+<h4 id="3-unmountComponent阶段"><a href="#3-unmountComponent阶段" class="headerlink" title="3. unmountComponent阶段"></a>3. unmountComponent阶段</h4><pre><code>此时，所有的队列&amp;状态都被重置为null，所以在此处调用setstate不会re-render</code></pre><ol>
+<li>如果存在componentWillUnmount，调用</li>
+<li>如果组件已经渲染，则对组件进行unmountComponent操作（卸载组件，被渲染组件赋值为null）</li>
+<li>执行并重置所有相关参数，更新状态。</li>
+</ol>
+
+      
+    </div>
+    
+  </div>
+  
+  
+</article>
+
+  
     <article id="post-virtualDOM" class="article global-container article-type-post" itemscope itemprop="blogPost">
   
     <header class="article-header">
@@ -88,7 +146,8 @@
     
     <div class="article-content article-content-cloud" itemprop="articleBody">
       
-        <h4 id="⭐-virtual-DOM-是什么？"><a href="#⭐-virtual-DOM-是什么？" class="headerlink" title="⭐ virtual DOM 是什么？"></a>⭐ virtual DOM 是什么？</h4><ul>
+        <h4 id="⭐-react源码目录解析"><a href="#⭐-react源码目录解析" class="headerlink" title="⭐ react源码目录解析"></a>⭐ react源码目录解析</h4><p><img src="https://b.bdstatic.com/searchbox/icms/searchbox/img/react%E6%BA%90%E7%A0%81%E6%A1%86%E6%9E%B6%E5%9B%BE.png" alt="react源码目录解析"></p>
+<h4 id="⭐-virtual-DOM-是什么？"><a href="#⭐-virtual-DOM-是什么？" class="headerlink" title="⭐ virtual DOM 是什么？"></a>⭐ virtual DOM 是什么？</h4><ul>
 <li>virtual DOM实际上是浏览器端通过JS实现的一套DOM API（为了解决频繁的数据更新引来的性能问题）</li>
 <li>基于react进行开发时，所有的DOM树都是通过virtual DOM构造的，react的所有工作都是基于virtual DOM来完成的</li>
 <li>react 在virtualDOM上实现了diff算法，数据更新时，会通过diff来寻找更新节点，只对变化的部分进行浏览器的DOM更新</li>
@@ -756,6 +815,10 @@
       <ul>
         
           <li>
+            <a href="/2020/04/19/react%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F/">react生命周期</a>
+          </li>
+        
+          <li>
             <a href="/2020/04/10/virtualDOM/">react virtual DOM</a>
           </li>
         
@@ -769,10 +832,6 @@
         
           <li>
             <a href="/2020/04/02/react_component/">react组件间抽象</a>
-          </li>
-        
-          <li>
-            <a href="/2020/04/01/react_cssModule/">react样式处理&amp;CSS module</a>
           </li>
         
       </ul>
